@@ -1,5 +1,5 @@
 import React ,{useEffect} from 'react';
-import axios from 'axios';
+
 import { StyleSheet  } from 'react-native';
 import {
   Layout,

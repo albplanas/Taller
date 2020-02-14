@@ -10,14 +10,12 @@ import {
   List
 } from '@ui-kitten/components';
 import { ProfileScreenProps } from '../../navigation/profile.navigator';
-import { Toolbar } from '../../components/toolbarSearcher.component';
 import {
   SafeAreaLayout,
   SafeAreaLayoutElement,
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 import { CarIcon, SearchIcon } from '../../assets/icons';
-import {onRefreshing} from "../../SQL/onRefresh"
 import {CARD_TRUCK_Profil} from "../../components/Profile/Equiment_Profile.component"
 
 

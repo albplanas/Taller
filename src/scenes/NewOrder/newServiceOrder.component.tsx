@@ -1,21 +1,13 @@
 import React ,{useEffect} from 'react';
-import axios from 'axios';
 import { StyleSheet  } from 'react-native';
 import {
   Layout,
   Text,
-  Tab,
-  TabView,
   Button
 } from '@ui-kitten/components';
 
-import { Upload_Icon,Close_Icon, AttachIcon,PersonIcon,BookmarkIcon,DoneAllIcon,} from '../../assets/icons';
+import { Upload_Icon,Close_Icon,DoneAllIcon,} from '../../assets/icons';
 
-
-import {DiagnosisChart} from "./Diagnosis/DiagnosisTab"
-
-
-import {Extra_Info} from "./Extra_Info/Extra_Info"
 import {varModel} from "../EditServiceOrder/constructionModel"
 import {ReviewChanges} from "./Review/ReviewChanges"
 
@@ -39,11 +31,11 @@ export const NewServiceOrderScreen =(props)=>{
 
 const [bottomTabsIndex, setBottomTabsIndex] = React.useState(0);
 const [DiagnosisArrayOriginal, setDiagnosisArrayOriginal] = React.useState([]);
-const [ExtraArrayOriginal, setExtraArrayOriginal] = React.useState();
+const [ExtraArrayOriginal, setExtraArrayOriginal] = React.useState([]);
 
 
 useEffect(() => {
-          console.log(props.truckid_Diagnosis,props.route.params.item.IDCatEquip)
+         
           //Diagnosis
           setDiagnosisArrayOriginal(props.truckid_Diagnosis===props.route.params.item.IDCatEquip?props.diagnosis_List:[])  ;
           const uplist=props.ExtraInfo_Diagnosis.arr!==undefined && props.truckid_Diagnosis===props.route.params.item.IDCatEquip ?props.ExtraInfo_Diagnosis:varModel({IdMaintenance:null,scheduledmaint:0,ErrorInOdometer:0,explanation:"",mtto_mill:''})
@@ -56,33 +48,8 @@ useEffect(() => {
  return (
     <Layout style={styles.container}>
       <TopNavigationComponent bottomTabsIndex={bottomTabsIndex} setBottomTabsIndex={setBottomTabsIndex} {...props}/>
-      <TabView
-                selectedIndex={bottomTabsIndex}
-                onSelect={setBottomTabsIndex}
-                shouldLoadComponent={(index) => index === bottomTabsIndex}
-        >
-
-        <Tab title='DIAGNOSIS' icon={BookmarkIcon}>
-         
-         <DiagnosisChart 
-                          {...props}
-                         DiagnosisArrayOriginal={DiagnosisArrayOriginal}
-                         setDiagnosisArrayOriginal={setDiagnosisArrayOriginal}
-                          />
-
-                          
-  
-        </Tab>
-        <Tab title='EXTRA INFO' icon={AttachIcon}>
-                <Extra_Info  
-                                  {...props}
-                                  ExtraArrayOriginal={ExtraArrayOriginal}
-                                  setExtraArrayOriginal={setExtraArrayOriginal}
-                      />
-        </Tab>
-
-                <Tab title='REVIEW CHANGES' icon={DoneAllIcon}>
-                        <ReviewChanges  
+     
+      <ReviewChanges  
                           {...props}
                           
                           setBottomTabsIndex={setBottomTabsIndex}
@@ -92,8 +59,7 @@ useEffect(() => {
                           setDiagnosisArrayOriginal={setDiagnosisArrayOriginal}
                           DiagnosisArrayOriginal={DiagnosisArrayOriginal}
                     />
-        </Tab>
-      </TabView>
+
 
     </Layout>
   );

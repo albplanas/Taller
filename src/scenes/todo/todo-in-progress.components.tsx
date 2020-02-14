@@ -137,8 +137,7 @@ var selectTruck =()=>{
                                                     }>Opened Already !!! </Button>:
                                             <Button   status="success" icon={EditIcon} style={style}
                                                     onPress={()=>{
-                                                     console.log(props.truckid_Diagnosis,item.IDCatEquip)
-                                                      props.truckid_Diagnosis===null || props.truckid_Diagnosis+""===item.IDCatEquip+""?
+                                                     props.truckid_Diagnosis===null || props.truckid_Diagnosis+""===item.IDCatEquip+""?
                                                       selectTruck(): decideAboutNewOrder()
                                                       
                                                                       }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView,SafeAreaView} from 'react-native';
+import { StyleSheet, ScrollView} from 'react-native';
 import {
   Divider,
   Layout,
@@ -8,16 +8,16 @@ import {
   Button,
 } from '@ui-kitten/components';
 
-import { UserPlus_Icon,UserSlash_Icon,Tools_Icon,Images_Icon,ToolsIcon,
-          UserStetoscope_Icon, User_Icon,FolderPlus_Icon,Folder_Icon,FolderSlash_Icon } from '../../../assets/icons';
-import {dataDiagnosisConstruction ,
-        dataMechanicsConstruction,
-        } from "../constructionModel"
+import {AppRoute} from "../../../navigation/app-routes"
+
+import { Images_Icon,PlusIcon,UserStetoscope_Icon, FolderPlus_Icon,Folder_Icon,FolderSlash_Icon } from '../../../assets/icons';
+
 
 //import {deleteLabor,storageDiagnosis} from "../Mechanics/auxiliarFunc"
 import {LeftList } from "../Extra_Info/List"
 import {CardLayout,HeaderCard} from './CardLayout'
 import {storeData} from "../globalJSFunctions"
+
 
 
 
@@ -32,6 +32,7 @@ export const ReviewChanges =(props)=>{
 
       var numOfChangesd=props.DiagnosisArrayOriginal.length;
 
+   
   
 
     return(
@@ -40,8 +41,6 @@ export const ReviewChanges =(props)=>{
 
                                       <Text category="h3" style={{textAlign:"center", marginBottom:5}} status="warning">Please Review your changes carefully  👀 👀 👀</Text>
                                       <Divider style={{ marginBottom:5}}/>
-
-                                  <SafeAreaView >
                                      <ScrollView >
                                       <Layout style={[styles.rowContainer]}>
 
@@ -55,10 +54,17 @@ export const ReviewChanges =(props)=>{
                                                       iconHead={()=><UserStetoscope_Icon color={"#17a2b8"}/>} 
                                                       title="DIAGNOSES"
                                                       description={numOfChangesd>0?numOfChangesd+" Changes":"No changes made"}
-                                                      iconSet={[Folder_Icon,()=><FolderPlus_Icon color="#007bff"/>,()=><FolderSlash_Icon color="#dc3545"/>]}/>
-
-                                          
-                                          <Layout style={[styles.layout,{padding:5}]} level='4'>
+                                                      iconSet={[Folder_Icon,()=><FolderPlus_Icon color="#007bff"/>,()=><FolderSlash_Icon color="#dc3545"/>,PlusIcon]}
+                                                      actionHeaderLeft={()=>{ props.navigation!==undefined?
+                                                                              props.navigation.navigate(AppRoute.MODAL,
+                                                                                                        {
+                                                                                                              item:props.route.params.item,
+                                                                                                              DiagnosisArrayOriginal:[]
+                                                                                                        
+                                                                                                        }):null}}
+                                                      />
+      
+                                          <Layout style={[styles.layout,{padding:5}]} level='2'>
                                                 
                                                       
                                                       <Card style={[styles.card,{width:"100%",paddingBottom:40}]} header={()=><HeaderCard icon={Images_Icon} title="EXTRA MATERIALS"/>} status='success'>
@@ -74,7 +80,6 @@ export const ReviewChanges =(props)=>{
 
                                       </Layout>
                                     </ScrollView>
-                                  </SafeAreaView>
                       </Layout>
                   </Layout>      
           )

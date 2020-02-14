@@ -5,8 +5,10 @@ import {
   Button
 } from '@ui-kitten/components';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCoffee,faTrashAlt,faEllipsisH,faCog, faWrench, faSearchMinus, faPaperPlane, faUser,faUserPlus,faUserSlash, faStethoscope, faCommentAlt, faCarBattery,faRing, faFilter, faChartPie,faUserTie,faUserSecret, faFolder, faFolderPlus, faFolderMinus, faImages, faCodeBranch } from '@fortawesome/free-solid-svg-icons'
-import { Component } from 'react';
+import { faTrashAlt,faEllipsisH,faCog, faWrench, faSearchMinus, faPaperPlane, faUser,faUserPlus,faUserSlash, faStethoscope, faCommentAlt,
+         faCarBattery,faRing, faFilter, faChartPie,faUserTie,faUserSecret, faFolder, faFolderPlus, faFolderMinus, faImages, faCodeBranch, 
+         faSave } from '@fortawesome/free-solid-svg-icons'
+
 import { Alert,ToastAndroid } from 'react-native';
 
 
@@ -35,7 +37,7 @@ export const FolderPlus_Icon = (props)=><FontAwesomeIcon icon={ faFolderPlus} si
 export const FolderSlash_Icon = (props)=><FontAwesomeIcon icon={ faFolderMinus} size={ 32 } color={props.color} />
 export const Images_Icon = (props)=><FontAwesomeIcon icon={ faImages} size={ 32 } color={props.color===null?'#17a2b8':props.color} />
 export const CodeBranch_Icon = (props)=><FontAwesomeIcon icon={ faCodeBranch} size={ 24 } color={props.color===null?'#17a2b8':props.color} />
-
+export const Save_Icon = ()=><FontAwesomeIcon icon={ faSave} size={ 48 } color={'#28a745'} />
 export const BookmarkIcon = (style): IconElement => (
   <Icon {...style} name='bookmark-outline' />
 );

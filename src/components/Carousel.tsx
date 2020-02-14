@@ -9,7 +9,6 @@ import {
     Card 
   } from '@ui-kitten/components';
 
-import {Button_With_POPOVER} from "./Button_withPopOver"
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {TrashAltIcon,TrashButton} from "../assets/icons"

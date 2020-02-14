@@ -16,7 +16,6 @@ import { AppNavigator } from './navigation/app.navigator';
 import { AppRoute } from './navigation/app-routes';
 import { connect } from 'react-redux';
 import {getMultiple} from "./store/localStorage.js"
-import AsyncStorage from '@react-native-community/async-storage';
 import * as actionTypes from "./store/actions";
 
 
@@ -28,7 +27,10 @@ import * as actionTypes from "./store/actions";
 
 
 
+
 class AppWindow extends Component{
+ 
+ 
   UNSAFE_componentWillMount(){
 
     getMultiple(['userName','theme','language','truckid_Diagnosis',"notes"],(val)=>{

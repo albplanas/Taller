@@ -14,6 +14,7 @@ import {dataPicturesConstruction} from "../constructionModel"
 
 
 
+
 export const CenterList = (props) => {
          
           var data= props.imgList
@@ -41,7 +42,6 @@ export const CenterList = (props) => {
 
 
 export const LeftList = (props) => {
-
       const renderItem = ({ item, index }) => (
         <LeftListItem item={item} data={props.data} index={index} setData={(obj)=>props.setData(obj) }/>
       );

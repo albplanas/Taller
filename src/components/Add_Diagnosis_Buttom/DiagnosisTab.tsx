@@ -6,8 +6,8 @@ import {
 
 
 
-import {MultiCard} from "../../../components/Modal_Diagnosis/modal-diagnosis-selector.componet"
-import {diagnosisFeatures} from "../../EditServiceOrder/Mechanics/auxiliarFunc"
+import {MultiCard} from "./modal-diagnosis-selector.componet"
+import {diagnosisFeatures} from "../../scenes/EditServiceOrder/Mechanics/auxiliarFunc"
 //import {storeData} from "../globalJSFunctions"
 
 

@@ -1,17 +1,22 @@
 import React from 'react';
-import { StyleSheet,ScrollView, } from 'react-native';
+import { StyleSheet,ScrollView, Text, } from 'react-native';
 import {
   Card,
   CardHeader,
-  Layout
+  Layout,
+  Button
 } from '@ui-kitten/components';
 import {Full_List} from "./feautures-list.component"
+import {CloseCircleIcon} from "../../assets/icons"
 
 
 
-
-const Header = () => (
-  <CardHeader title='FEATURES'/>
+const Header = (props) => (
+  <CardHeader title="">
+    <Layout style={{flex:1,flexDirection:"row"}} >
+          <Button appearance="ghost" icon={CloseCircleIcon} onPress={props.onClose}></Button>
+    </Layout>
+    </CardHeader>
 );
 
 
@@ -23,16 +28,16 @@ const Header = () => (
 export const CardDiagnosis =(props)=> (
             <Layout style={styles.cardLayout}>
 
-            <Card style={styles.card} header={Header}  status='success'>
+                  <Card header={()=><Header onClose={props.onClose}/>}  status='success'>
 
-            
+                  
 
-                <ScrollView style={{marginBottom:80}} >
-                    <Full_List {...props}/>
-                </ScrollView>
+                      <ScrollView style={{marginBottom:80}} >
+                          <Full_List {...props}/>
+                      </ScrollView>
 
-            
-            </Card>
+                  
+                  </Card>
 
 
         </Layout>
@@ -44,12 +49,8 @@ export const CardDiagnosis =(props)=> (
 
 const styles = StyleSheet.create({
    
-      card: {
-        marginVertical: 8,
-      },
       cardLayout:{
         width:'60%',
         marginLeft:'20%',
-        maxHeight:'85%'
       },
   });
