@@ -1,7 +1,7 @@
 /**
  * @format
  */
-import React,{Component, useEffect } from 'react';
+import React,{ useEffect } from 'react';
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import App from './src/app.component';

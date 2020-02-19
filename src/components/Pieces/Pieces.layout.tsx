@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState} from 'react';
 import {
   Layout,
   Divider,
@@ -6,59 +6,38 @@ import {
   Text,
 } from '@ui-kitten/components';
 import {StyleSheet, Alert} from "react-native"
-import {BackIcon,Calendar_Icon} from "../../assets/icons"
-import {TopNavigationAlignmentsShowcase} from "./TopNavigator"
+
 import {GetPiecesByTruck} from "../../SQL/maintenance.sql.js"
+
+import {TopNavigationAlignmentsShowcase } from "./TopNavigator"
+
 import {ViewPagerInlineStylingShowcase} from "./Viewpager"
 
 
+export const PiecesByTruck =(props)=>{
+
+  const [spinner,setSpinner]=useState(false);
+  const [id,setId]=useState(null);
+  const [data,setData]=useState([]);
+  const [code,setCode]=useState("");
+   
+  useEffect(()=>{
+
+    setSpinner(true);
+    setId(props.route.params.id);
+    GetPiecesByTruck(props.route.params.id,(x)=>{setData(x);setSpinner(false)})
+  },[props.route.params.id])
 
 
-
-
-export class PiecesByTruck extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-         cod:"",
-          id:null,
-          data:[],
-          spinner:false,
-        };
-       
-      }
-     UNSAFE_componentWillMount(){
-        this.setState({spinner:true,id:this.props.route.params.id})
-        GetPiecesByTruck(this.props.route.params.id,(x)=>{this.setState({data:x,spinner:false})})
-     }
-     UNSAFE_componentWillReceiveProps(nextProps){
-         if(nextProps.route.params.id!==undefined){
-            if(nextProps.route.params.id!==this.state.id){
-  
-                this.setState({spinner:true,id:nextProps.route.params.id})
-                GetPiecesByTruck(nextProps.route.params.id,(x)=>{this.setState({data:x,spinner:false})})
-            }
-         }
-
-     }
-
-     GetView(value){
-            this.setState({
-                view:value
-            })
-            
-      }
-
-    render(){
         return <>
-                <TopNavigationAlignmentsShowcase  {...this.props}/>
+                <TopNavigationAlignmentsShowcase  {...props}/>
                 <Divider/>
                 <Layout  style={styles.container}>
-                    {this.state.spinner?<Loader/>:
-                        <ViewPagerInlineStylingShowcase data={this.state.data}/>}
+                    {spinner?<Loader/>:
+                        <ViewPagerInlineStylingShowcase data={data}/>}
                 </Layout>
             </>
-    }
+    
 }
 const Loader=()=>{
 return (

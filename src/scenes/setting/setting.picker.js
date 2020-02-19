@@ -11,6 +11,8 @@ import {
 
 
 
+
+
 //import all the components we are going to use. 
 export const PickerSetting =(props)=>{
 
@@ -23,6 +25,7 @@ export const PickerSetting =(props)=>{
                             return { text: e.short_name }
                           }))
   },[props.userName,props.list])
+
 
     return (
               <Card style={props.styles.card}  

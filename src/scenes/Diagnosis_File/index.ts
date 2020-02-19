@@ -1,4 +1,4 @@
-import  {NewServiceOrderScreen} from './newServiceOrder.component';
+import  {DiagnosisFileScreen} from './diagnosisFile.component';
 import { connect } from 'react-redux';
 import * as actionTypes from "../../store/actions";
 
@@ -26,4 +26,4 @@ const mapStateToProps = state => {
         onClear_DIAGNOSIS:() => dispatch({type: actionTypes.UPDATE_CLEAR_DIAGNOSIS_LIST}),
     };
   };
-export default connect(mapStateToProps,mapDispatchToProps )(NewServiceOrderScreen)  ;
+export default connect(mapStateToProps,mapDispatchToProps )(DiagnosisFileScreen)  ;

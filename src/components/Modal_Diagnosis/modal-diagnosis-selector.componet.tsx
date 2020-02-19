@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{PureComponent} from 'react';
 import { StyleSheet,View,ScrollView ,Image} from 'react-native';
 import {
   Layout,
@@ -18,12 +18,12 @@ import {diagnosisFeatures} from "../../scenes/EditServiceOrder/Mechanics/auxilia
 
 
 
- class MNavigator extends React.Component {
+ class MNavigator extends PureComponent {
   state={
     featureTree:[],
 
   }
-  UNSAFE_componentWillMount(){
+  componentDidMount(){
 
     var Arr=diagnosisFeatures(this.props.FeaturesList)
    

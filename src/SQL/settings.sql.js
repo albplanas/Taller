@@ -27,7 +27,7 @@ const Get_Diagnosis_Feature_Tree=(callback)=>{
 
      axios.get('http://jva-sql:8080/Assistance/Taller-Inventory/php-files/Diagnosis_Feature_Tree.php')
      .then((response)=> {
-         console.log(response.data)
+        // console.log(response.data)
          callback(response.data)
      })
      .catch(error => {

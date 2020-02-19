@@ -1,11 +1,15 @@
 import React from 'react';
-import { StyleSheet,ScrollView } from 'react-native';
+import { StyleSheet,ScrollView, Alert } from 'react-native';
 import {
   Layout,
   Text,
   ListItem,
+  Avatar
 } from '@ui-kitten/components';
 import { TrashButton } from '../../../assets/icons';
+import {Img_Src} from "../../../assets/iconArrays.js"
+import {AppRoute} from "../../../navigation/app-routes"
+
 
 
 
@@ -13,24 +17,47 @@ import { TrashButton } from '../../../assets/icons';
 
  export  const ListChanges = (props) => {
 
-
-      const justId = props.data.map(e=>e.SubId);
-  
+ 
+      
       const renderItem = props.data.map(item => {
-                                                    
 
-                                                    return <ListItem
-                                                                          title={item.Title}
-                                                                          description={item.Description}
-                                                                          icon={props.iconSet[1]}
-                                                                          accessory={()=> <TrashButton appe={"outline"} 
-                                                                                                  deleteFunc={()=>{
-                                                                                                    var value= justId.filter(x=>x!==item.SubId)
-                                                                                                      props.delete(value)
-                                                                                                  }}/>}
-                                                                        />
+                                               const GoHead=()=>{ 
+                                                                    console.log("props.navigation",props.navigation) 
+                                                                    props.navigation!==undefined?
+                                                                                                  props.navigation.navigate(AppRoute.DIAGNOSIS_FILE,
+                                                                                                                            {
+                                                                                                                                  item:item,
+                                                                                                                                  DiagnosisArrayOriginal:[1],
+                                                                                                                                  idmechanic:props.idmechanic,
+                                                                                                                            }):null}
+                                             const   onPress=()=>Alert.alert(
+                                                                                item.SubTitle+" Edition",
+                                                                                'If yo want to edit this diagnosis press Edit, in other way press Cancel',
+                                                                                [ {
+                                                                                    text: 'Cancel',
+                                                                                    onPress: () => console.log('Cancel Pressed'),
+                                                                                
+                                                                                  },
+                                                                                  {text: 'OK', onPress: () => GoHead(),style: 'destructive'},
+                                                                                ],
+                                                                                {cancelable: false},
+                                                                              )
+                                            const src=Img_Src[item.categoryId-1]
+                                   
+                                            const icon=()=><Avatar style={styles.avatar} size='large' source={src.src}/>                                  
+                                                            return <ListItem
+                                                                                  title={item.Title}
+                                                                                  status="primary"
+                                                                                  description={item.SubTitle}
+                                                                                // icon={props.iconSet()[1]}
+                                                                                  onPress={onPress}
+                                                                                  accessory={props.iconSet()[1]}
+                                                                                icon={icon}
+                                                                                />
                                                 
                                                   });
+
+
           
        
   
@@ -57,6 +84,12 @@ import { TrashButton } from '../../../assets/icons';
       marginBottom:80,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    avatar: {
+      margin: 8,
+      width:64,
+      height:64,
+      backgroundColor:'#ADD8E6'
     },
   });
   

@@ -8,7 +8,6 @@ import { TodoDoneScreen as TD } from './todo-done.component';
 const mapStateToProps = state => {
       
     return {
-       theme:state.settings.theme,
        language:state.settings.language,
        userName:state.settings.userName,
        diagnosis_List:state.diagnosisList.diagnosis_List,
@@ -17,7 +16,6 @@ const mapStateToProps = state => {
        FeaturesList:state.list.FeaturesList,
        FeaturesTruck:state.list.FeaturesTruck,
        Opened_S_O:state.list.Opened_S_O,
-       notes:state.diagnosisList.notes
     };
   };
   const mapDispatchToProps = dispatch => {
@@ -33,7 +31,7 @@ const mapStateToProps = state => {
   const TodoDoneScreen=connect(mapStateToProps,mapDispatchToProps )(TD)
 
 
-export { TodoDetailsScreen, TodoDetailsRouteParams } from './todo-details.component';
+
 export { TodoInProgressScreen };
 export { TodoDoneScreen } ;
 export { TodoTabBar };

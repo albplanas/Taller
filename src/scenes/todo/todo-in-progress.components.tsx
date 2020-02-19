@@ -31,17 +31,25 @@ import { EditIcon, SearchIcon,CarIcon } from '../../assets/icons';
 
 
 
+
+
 const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & ThemedComponentProps): ListElement => {
+
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
   const [item, setItem] = React.useState(null);
   const onRefresh = React.useCallback(()=>RefreshFunct(props.onUpdate_LIST,setRefreshing), [refreshing]);
+  const [data, setData] = React.useState([]);
 
 
 
-
-  var arr=props.FeaturesTruck.sort((a,b)=>{return a.cod>b.cod?1:-1})
  
+  useEffect(() => {
+   console.log(props.FeaturesTruck.length)
+    setData(props.FeaturesTruck ) 
+                          
+  }, []);
+  const Ft=(val,item=null)=>{setSelectedIndex(val);setItem(item)}
   return (  
   <Layout style={props.themedStyle.container}>
         <SafeAreaView >
@@ -52,14 +60,13 @@ const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & Themed
                             <Layout style={styles.container}>
                                           
                                           <Layout style={styles.layerOne} level ="1">
-                                             <Listing list={arr} 
-                                                                            Opened_S_O={props.Opened_S_O}
-                                                                              route={props.route} 
-                                                                              setSelectedIndex={(val,item=null)=>{setSelectedIndex(val);setItem(item)}} 
+                                             <Listing                         list={data} 
+                                                                              Opened_S_O={props.Opened_S_O}
+                                                                              params={props.route.params} 
+                                                                              setSelectedIndex={Ft} 
                                                                               navigation={props.navigation}
                                                                               truckid_Diagnosis={props.truckid_Diagnosis}
                                                                               onUpdate_DIAGNOSIS={props.onUpdate_DIAGNOSIS}
-                                                                              onClear_DIAGNOSIS={props.onClear_DIAGNOSIS}
                                                                               />
                                                                   
                                                                         
@@ -90,85 +97,79 @@ export const Listing = (props) => {
   }, [props.truckid_Diagnosis]);
   
 
-  const renderItemAccessory = (item,style) => {
-//console.log(props.truckid_Diagnosis)
-var decideAboutNewOrder=()=>{
-      Alert.alert(
-        'BE AWARE ABOUT',
-        'There is a new services order open but it is not completed already, if you push CONTINUE all information regard to this existing order will be lost , including the diagnosis and extra information like pictures  !!!',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'Continue', onPress: () => {
-         
-            storeData('truckid_Diagnosis',item.IDCatEquip+"");
-            //storeData('pictures_Diagnosis',JSON.stringify([]));
-           // storeData('diagnosis_List',JSON.stringify([]));
-            
-           // props.onClear_DIAGNOSIS(item.IDCatEquip);
-           //props.onUpdate_DIAGNOSIS('truckid_Diagnosis',item.IDCatEquip+"");
-           ToastAndroid.showWithGravity(
-            'Loading ...',
-            5000,
-            ToastAndroid.CENTER,
-          );
-            props.navigation!==undefined?props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item}):null
- 
-        }},
-        ],
-        {cancelable: false},
-      );
-}
-var selectTruck =()=>{
-  storeData('truckid_Diagnosis',item.IDCatEquip+"");
-  props.onUpdate_DIAGNOSIS('truckid_Diagnosis',item.IDCatEquip+"")
-  props.navigation!==undefined?props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item}):null
-}
-    return <Layout style={{flexDirection: 'row',}}>
-                                    {
-                                      alreadyOpend.filter(e=>e===item.cod).length>0?
-                                          <Button   status="warning" icon={EditIcon} 
-                                                      onPress={()=>{ props.navigation!==undefined?
-                                                    props.navigation.navigate(AppRoute.EDIT_SERVICE_ORDER,{item:props.Opened_S_O.filter(e=>e.cod===item.cod)[0]}):null}
-                                                  
-                                                    }>Opened Already !!! </Button>:
-                                            <Button   status="success" icon={EditIcon} style={style}
-                                                    onPress={()=>{
-                                                     props.truckid_Diagnosis===null || props.truckid_Diagnosis+""===item.IDCatEquip+""?
-                                                      selectTruck(): decideAboutNewOrder()
-                                                      
-                                                                      }
-                                                    }/>
-                                  }
-                                          
-                                          <Button   status="info" icon={CarIcon} style={style}
-                                                    onPress={()=>{
-                                                                      props.navigation!==undefined?props.navigation.navigate(AppRoute.PROFILE,{cod:item.cod}):null}
-                                          }/> 
-                                  </Layout>
+        const renderItemAccessory = (item,style) => {
+      
+                    const decideAboutNewOrder=()=>{
+                          Alert.alert(  'BE AWARE ABOUT',
+                                          'There is a new services order open but it is not completed already, if you push CONTINUE all information regard to this existing order will be lost , including the diagnosis and extra information like pictures  !!!',
+                                        [  {
+                                                text: 'Cancel',
+                                                onPress: () => console.log('Cancel Pressed'),
+                                                style: 'cancel',
+                                              },  {
+                                                text: 'Continue', onPress: () => {
+                            
+                                              storeData('truckid_Diagnosis',item.IDCatEquip+"");
+
+                                              ToastAndroid.showWithGravity(
+                                                    'Loading ...',
+                                                    ToastAndroid.LONG,
+                                                    ToastAndroid.CENTER,
+                                                  );
+                                      props.navigation!==undefined?props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item}):null
+                    
+                            }},
+                            ],
+                            {cancelable: false},
+                          );
+                    }
+
+
+                const selectTruck =()=>{
+                  
+                  storeData('truckid_Diagnosis',item.IDCatEquip+"");
+
+                  props.onUpdate_DIAGNOSIS('truckid_Diagnosis',item.IDCatEquip+"")
+
+                  props.navigation!==undefined?props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item}):null
+
+                }
+
+                const onPress_New_SO=()=>props.truckid_Diagnosis===null || props.truckid_Diagnosis+""===item.IDCatEquip+""? selectTruck(): decideAboutNewOrder()
+                const onPress_Profile =() => props.navigation!==undefined?props.navigation.navigate(AppRoute.PROFILE,{cod:item.cod}):null
+                    return <Layout style={{flexDirection: 'row',}}>
+                                                    {
+                                                      alreadyOpend.filter(e=>e===item.cod).length>0?
+                                                          <Button   status="warning" icon={EditIcon} 
+                                                                      onPress={ onPress_Edit_SO }>Opened Already !!! </Button>:
+
+                                                            <Button   status="success" icon={EditIcon} style={style}
+                                                                    onPress={onPress_New_SO}/>
+                                                  }
+                                                          
+                                                          <Button   status="info" icon={CarIcon} style={style}
+                                                                    onPress={onPress_Profile}/> 
+                                                  </Layout>
    
     
   }
 
-  const renderItem = ({ item, index }) => (
-    <><ListItem
-      title={item.cod}
-      description={`${item.descrip} / ${item.Brand} / ${item.year} `}
-      titleStyle={{fontSize:30,padding:8}}
-      icon={CarIcon}
-      accessory={(style)=>renderItemAccessory(item,style)}
-    />
+  const renderItem = ({ item, index }) => <ListItem
+                                                      title={item.cod}
+                                                      description={`${item.descrip} / ${item.Brand} / ${item.year} `}
+                                                      titleStyle={{fontSize:30,padding:8}}
+                                                      icon={CarIcon}
+                                                      accessory={(style)=>renderItemAccessory(item,style)}
+                                                    />
+
+    const    remaining=(li)=> {
+                            var rem =  text===""?li: li.filter(e=>e.cod.indexOf(text)!==-1)
+                            return rem.length<=20?rem:rem.slice(0,12)
+    } 
+    const    alreadyOpened =()=>props.Opened_S_O.filter(e=>e.cod+""===text)                                     
+
+    const onPress_Edit_SO = ()=> props.navigation!==undefined? props.navigation.navigate(AppRoute.EDIT_SERVICE_ORDER,{item:props.Opened_S_O.filter(e=>e.cod===item.cod)[0]}):null
     
-    </>
-  );
-var li=props.list;
-var remaining= text===""?li:
-                li.filter(e=>e.cod.indexOf(text)!==-1)
-                var alreadyOpened=props.Opened_S_O.filter(e=>e.cod+""===text)
-  
   
 
   
@@ -184,23 +185,17 @@ var remaining= text===""?li:
                     {alreadyOpened.length>0?<>
                           <Text category="h6"style={{marginBottom:30}}status="warning" >This Equipment has an opened order already, Click on Go to find this Order</Text>
                           <Button   status="warning" icon={EditIcon} 
-                                      onPress={()=>{ props.navigation!==undefined?
-                                                props.navigation.navigate(AppRoute.EDIT_SERVICE_ORDER,{item:alreadyOpened[0]}):null}
+                                      onPress={()=>{ onPress_Edit_SO}
                                             
                           }>GO to Edit</Button></> :
-                          remaining.length<=20? <List
-                          contentContainerStyle={styles.contentContainer}
-                          data={remaining.length>20?remaining.slice(0,20):remaining}
-                          renderItem={renderItem}
-                        /> :
-                        <>
-                        <List
-                          contentContainerStyle={styles.contentContainer}
-                          data={remaining.length>20?remaining.slice(0,20):remaining}
-                          renderItem={renderItem}
-                        />
-                        <Text status="warning">Type more characteres to depure the search...</Text>
-                        </>
+                          <>
+                                <List
+                                  contentContainerStyle={styles.contentContainer}
+                                  data={remaining(props.list)}
+                                  renderItem={renderItem}
+                                />
+                                <Text status="warning">Type more characteres to depure the search...</Text>
+                                </>
                         }    
                 </>
 

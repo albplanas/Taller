@@ -33,7 +33,7 @@ export const UserPlus_Icon = ()=><FontAwesomeIcon icon={ faUserPlus} size={ 32 }
 export const UserSlash_Icon = ()=><FontAwesomeIcon icon={ faUserSlash} size={ 32 } color={'#d9534f'} />
 export const UserStetoscope_Icon = (props)=><FontAwesomeIcon icon={ faStethoscope} size={ 32 } color={props.color===undefined?'#dc3545':props.color} />
 export const Folder_Icon = ()=><FontAwesomeIcon icon={ faFolder} size={ 32 } color={'#868e96'} />
-export const FolderPlus_Icon = (props)=><FontAwesomeIcon icon={ faFolderPlus} size={ 32 } color={props.color} />
+export const FolderPlus_Icon = (props)=><FontAwesomeIcon icon={ faFolderPlus} size={ 48 } color={props.color} />
 export const FolderSlash_Icon = (props)=><FontAwesomeIcon icon={ faFolderMinus} size={ 32 } color={props.color} />
 export const Images_Icon = (props)=><FontAwesomeIcon icon={ faImages} size={ 32 } color={props.color===null?'#17a2b8':props.color} />
 export const CodeBranch_Icon = (props)=><FontAwesomeIcon icon={ faCodeBranch} size={ 24 } color={props.color===null?'#17a2b8':props.color} />

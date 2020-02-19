@@ -1,4 +1,4 @@
-import React ,{Component,Fragment}from 'react';
+import React ,{PureComponent}from 'react';
 import { YellowBox } from 'react-native';
 import { NavigationNativeContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -14,56 +14,57 @@ import {
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { AppNavigator } from './navigation/app.navigator';
 import { AppRoute } from './navigation/app-routes';
-import { connect } from 'react-redux';
+import { connect,batch } from 'react-redux';
 import {getMultiple} from "./store/localStorage.js"
 import * as actionTypes from "./store/actions";
 
+const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React);
 
 
+class AppWindow extends PureComponent{
 
-
-
-
-
-
-
-
-class AppWindow extends Component{
  
- 
-  UNSAFE_componentWillMount(){
+  componentDidMount(){
+     
+     
+    
+      function properValue(val,num){
+          return val[num][1]===null?[]:JSON.parse(val[num][1])
+      }
+    getMultiple(['userName','theme','language','truckid_Diagnosis',"notes",
+                  'MechanicList','FeaturesList',"diagnosis_List",'FeaturesTruck',"pictures_Diagnosis","ExtraInfo_Diagnosis","Opened_S_O",
+                  'SO_Diagnosis_OffLine','SO_MechanicLabor_OffLine','SO_Picture_OffLine', "SO_ExtraInfo_OffLine"
+  
+  ],(val)=>{
+      batch(() => {
+                      this.props.onUpdate_Settings("userName",val[0][1])
+                      this.props.onUpdate_Settings('theme',val[1][1])
+                      this.props.onUpdate_Settings('language',val[2][1])
+                      this.props.onUpdate_DIAGNOSIS('truckid_Diagnosis',val[3][1])
+                      this.props.onUpdate_DIAGNOSIS('notes',val[4][1])
 
-    getMultiple(['userName','theme','language','truckid_Diagnosis',"notes"],(val)=>{
+                      //Second Group
+                      this.props.onUpdate_LIST("MechanicList",properValue(val,5))
+                      this.props.onUpdate_LIST("FeaturesList",properValue(val,6))
+                      this.props.onUpdate_DIAGNOSIS("diagnosis_List",properValue(val,7))
+                      this.props.onUpdate_LIST("FeaturesTruck",properValue(val,8))
+                      this.props.onUpdate_DIAGNOSIS("pictures_Diagnosis",properValue(val,9))
+                      this.props.onUpdate_DIAGNOSIS("ExtraInfo_Diagnosis",properValue(val,10))
+                      this.props.onUpdate_LIST("Opened_S_O",properValue(val,11))
 
-      this.props.onUpdate_Settings("userName",val[0][1])
-      this.props.onUpdate_Settings('theme',val[1][1])
-      this.props.onUpdate_Settings('language',val[2][1])
-      this.props.onUpdate_DIAGNOSIS('truckid_Diagnosis',val[3][1])
-      this.props.onUpdate_DIAGNOSIS('notes',val[4][1])
-     // console.log(val)
+                      //Third Group
+                                this.props.onUPDATE_EDIT_SO("SO_Diagnosis_OffLine",properValue(val,12))
+                                this.props.onUPDATE_EDIT_SO("SO_MechanicLabor_OffLine",properValue(val,13))
+                                this.props.onUPDATE_EDIT_SO("SO_Picture_OffLine",properValue(val,14))
+                                this.props.onUPDATE_EDIT_SO("SO_ExtraInfo_OffLine",properValue(val,15))
+                      });
+   
     })
 
-    getMultiple(['MechanicList','FeaturesList',"diagnosis_List",'FeaturesTruck',"pictures_Diagnosis","ExtraInfo_Diagnosis","Opened_S_O"],(val)=>{
-
-      this.props.onUpdate_LIST("MechanicList",val[0][1]===null?[]:JSON.parse(val[0][1]))
-      this.props.onUpdate_LIST("FeaturesList",val[1][1]===null?[]:JSON.parse(val[1][1]))
-      this.props.onUpdate_DIAGNOSIS("diagnosis_List",val[2][1]===null?[]:JSON.parse(val[2][1]))
-      this.props.onUpdate_LIST("FeaturesTruck",val[3][1]===null?[]:JSON.parse(val[3][1]))
-      this.props.onUpdate_DIAGNOSIS("pictures_Diagnosis",val[4][1]===null?[]:JSON.parse(val[4][1]))
-      this.props.onUpdate_DIAGNOSIS("ExtraInfo_Diagnosis",val[5][1]===null?[]:JSON.parse(val[5][1]))
-      this.props.onUpdate_LIST("Opened_S_O",val[6][1]===null?[]:JSON.parse(val[6][1]))
-    // console.log("LEFG",JSON.parse(val[0][1]))
-    })
-    getMultiple(['SO_Diagnosis_OffLine','SO_MechanicLabor_OffLine','SO_Picture_OffLine', "SO_ExtraInfo_OffLine"],(val)=>{
-               
-                this.props.onUPDATE_EDIT_SO("SO_Diagnosis_OffLine",val[0][1]===null?[]:JSON.parse(val[0][1]))
-                this.props.onUPDATE_EDIT_SO("SO_MechanicLabor_OffLine",val[1][1]===null?[]:JSON.parse(val[1][1]))
-                this.props.onUPDATE_EDIT_SO("SO_Picture_OffLine",val[2][1]===null?[]:JSON.parse(val[2][1]))
-                this.props.onUPDATE_EDIT_SO("SO_ExtraInfo_OffLine",val[3][1]===null?[]:JSON.parse(val[3][1]))
-              //  console.log("val[3][1]",val[3][1])
-    })
   }
 render(){
+  
   return (
     <React.Fragment>
       <IconRegistry icons={EvaIconsPack}/>
@@ -86,8 +87,6 @@ const mapStateToProps = state => {
       
   return {
      theme:state.settings.theme,
-     language:state.settings.language,
-     userName:state.settings.userName
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -102,8 +101,6 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps,mapDispatchToProps)(AppWindow)  ;
 
 
-// For some reason, starting from 0.61, react-native-gesture-handler throws this warning
-// https://github.com/facebook/react-native/issues/26226
 YellowBox.ignoreWarnings([
   'RCTRootView cancelTouches',
 ]);

@@ -21,6 +21,8 @@ import {ReviewChanges} from "./Review/ReviewChanges"
 
 
 
+
+
 export const NewServiceOrderScreen =(props)=>{
 
 
@@ -30,34 +32,34 @@ export const NewServiceOrderScreen =(props)=>{
 
 
 const [bottomTabsIndex, setBottomTabsIndex] = React.useState(0);
-const [DiagnosisArrayOriginal, setDiagnosisArrayOriginal] = React.useState([]);
+const [DiagnosisArray, setDiagnosisArray] = React.useState([]);
 const [ExtraArrayOriginal, setExtraArrayOriginal] = React.useState([]);
 
 
 useEffect(() => {
          
           //Diagnosis
-          setDiagnosisArrayOriginal(props.truckid_Diagnosis===props.route.params.item.IDCatEquip?props.diagnosis_List:[])  ;
-          const uplist=props.ExtraInfo_Diagnosis.arr!==undefined && props.truckid_Diagnosis===props.route.params.item.IDCatEquip ?props.ExtraInfo_Diagnosis:varModel({IdMaintenance:null,scheduledmaint:0,ErrorInOdometer:0,explanation:"",mtto_mill:''})
-                 setExtraArrayOriginal(uplist)  ;  
-                 props.truckid_Diagnosis===props.route.params.item.IDCatEquip?null:props.onUpdate_DIAGNOSIS('truckid_Diagnosis',props.route.params.item.IDCatEquip+"");                   
-}, []);
+          console.log("Render  NewServiceOrderScreen")
+
+
+          setDiagnosisArray(Array.isArray(props.diagnosis_List)?props.diagnosis_List:[])  ;
+}, [props.diagnosis_List]);
 
 
 
  return (
     <Layout style={styles.container}>
+
       <TopNavigationComponent bottomTabsIndex={bottomTabsIndex} setBottomTabsIndex={setBottomTabsIndex} {...props}/>
      
       <ReviewChanges  
                           {...props}
-                          
+                          idmechanic={props.MechanicList.filter(e=>e.short_name===props.userName)}
                           setBottomTabsIndex={setBottomTabsIndex}
-                          
                           ExtraArrayOriginal={ExtraArrayOriginal}
                           setExtraArrayOriginal={setExtraArrayOriginal}
-                          setDiagnosisArrayOriginal={setDiagnosisArrayOriginal}
-                          DiagnosisArrayOriginal={DiagnosisArrayOriginal}
+                          setDiagnosisArray={setDiagnosisArray}
+                          DiagnosisArray={DiagnosisArray}
                     />
 
 
@@ -86,8 +88,7 @@ const TopNavigationComponent = (props) => (
                 status="danger"
                 onPress={()=>{props.navigation.goBack()}}
                 >Cancel This Order</Button>
-        {props.bottomTabsIndex===2?<Button style={{margin:8,minWidth:200}} status="success" size='giant' icon ={Upload_Icon}>UPLOAD </Button>:null}
-        {props.bottomTabsIndex<2?<Button style={{margin:8,minWidth:200}} onPress={()=>props.setBottomTabsIndex(3)} status="info" size='giant' icon ={DoneAllIcon}>CHECK OUT </Button>:null}
+        <Button style={{margin:8,minWidth:200}} status="success" size='giant' icon ={Upload_Icon}>UPLOAD </Button>
     </Layout>
   </Layout>
 );

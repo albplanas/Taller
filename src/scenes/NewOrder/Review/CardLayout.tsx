@@ -11,6 +11,8 @@ import {PlusIcon } from '../../../assets/icons';
 
 import {ListChanges} from "./List";
 
+
+
 export const CardLayout=(props)=>{
     return  <Layout style={[styles.layout,{padding:5,minHeight:450,maxHeight:450}]} level='2'>
                 <Card style={[styles.card,{width:"100%"}]} header={()=><HeaderCard actionHeaderLeft={props.actionHeaderLeft}icon={props.iconHead} description={props.description} title={props.title}/>} status='success'>
@@ -22,6 +24,7 @@ export const CardLayout=(props)=>{
 }
 
 export const HeaderCard=(props)=>{
+
 return <CardHeader title={props.title}  >
           <Button icon={props.icon} 
                   appearance="ghost" status={"basic"} size="giant"  textStyle={{fontSize:20,fontFamily:"sans-serif-thin",}}  >
@@ -34,7 +37,7 @@ return <CardHeader title={props.title}  >
         <Button icon={PlusIcon} 
                 status={"primary"} 
                 size="large" 
-                style={{marginLeft: 'auto',borderRadius:30,width:60,height:60}} 
+                style={{marginLeft: 'auto',marginRight:30,borderRadius:30,width:60,height:60}} 
                 onPress={props.actionHeaderLeft}/>
         </CardHeader>
 }

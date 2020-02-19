@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet,ScrollView,RefreshControl } from 'react-native';
 import {
   Divider,
@@ -22,6 +22,7 @@ import {CARD_TRUCK_Profil} from "../../components/Profile/Equiment_Profile.compo
 
 
 export const ProfileScreen = (props: ProfileScreenProps): SafeAreaLayoutElement => {
+
   const [refreshing, setRefreshing] = React.useState(false);
   const [text, setText] = React.useState("");
   const [select, setSelect] = React.useState(null);

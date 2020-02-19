@@ -1,5 +1,5 @@
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import React,{Component} from 'react';
+import React  from 'react';
 import { StyleSheet, Image, Dimensions, Alert,ToastAndroid  } from 'react-native';
 import {
     Layout,

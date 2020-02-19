@@ -17,6 +17,8 @@ import {DiagnosisChart}from "./DiagnosisTab"
 
 
 
+
+
 export const AddDiagnosisModal =(props)=>{
 
 
@@ -24,13 +26,20 @@ export const AddDiagnosisModal =(props)=>{
 /******************* STATE TO SUBMIT *******************/
 
 const [DiagnosisArrayOriginal, setDiagnosisArrayOriginal] = React.useState([]);
+const [DiagnosisArrayEdition, setDiagnosisArrayEdition] = React.useState([]);
 const [ExtraArray, setExtraArray] = React.useState([]);
 
 
 useEffect(() => {
+  //console.log(AddDiagnosisModal)
     setDiagnosisArrayOriginal(props.route.params.DiagnosisArrayOriginal)
-         }, []);
+    setDiagnosisArrayEdition(props.diagnosis_List.filter(e=>e.IDCatEquip===props.route.params.item.IDCatEquip));
 
+         }, [props.diagnosis_List.length]);
+
+         const uploadData=(val)=>{
+          return props.route.params.originalRoute==="diagnosis"?props.onUpdate_DIAGNOSIS("diagnosis_List",val):null
+         }
 
 
  return (
@@ -38,8 +47,12 @@ useEffect(() => {
       <TopNavigationComponent {...props}/>
       <DiagnosisChart 
                           {...props}
+                          idmechanic={props.route.params.idmechanic}
+                          uploadData={uploadData}
                           DiagnosisArray={[]}
                           DiagnosisArrayOriginal={DiagnosisArrayOriginal}
+                          DiagnosisArrayEdition={DiagnosisArrayEdition}
+                          setDiagnosisArrayEdition={setDiagnosisArrayEdition}
                           ExtraArray={ExtraArray}
                           setExtraArray={setExtraArray}
                           />

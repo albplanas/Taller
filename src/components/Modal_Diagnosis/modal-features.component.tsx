@@ -1,4 +1,4 @@
-import React,{Component,PureComponent} from 'react';
+import React,{ PureComponent} from 'react';
 import { View,Modal,ToastAndroid } from 'react-native';
 
 import {CardDiagnosis} from "./Card-diagnosis.component"

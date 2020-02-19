@@ -31,6 +31,7 @@ export const SwitchSetting =(props)=>{
       setChecked(props.param===true?true:false);
       },[props.param,props.header])
 
+  
     return (
       <Card style={props.styles.card}  
             header={()=><CardHeader  title={props.header==='LENGUAGE'?'LANGUAGE':'THEME'}/>} 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent} from 'react';
 import {
   Layout,
   Button,
@@ -6,13 +6,13 @@ import {
   List,
   CardHeader,
   Card,
+  ListItem,
   Text,
   Spinner
 } from '@ui-kitten/components';
 import {StyleSheet, Alert} from "react-native"
 import {GetPiecesByMaintence} from "../../SQL/maintenance.sql.js"
-
-
+import {CodeBranch_Icon} from "../../assets/icons"
 
 
   
@@ -72,7 +72,7 @@ import {GetPiecesByMaintence} from "../../SQL/maintenance.sql.js"
   });
 
 
-  class MoredDetails extends Component{
+  class MoredDetails extends PureComponent{
     constructor(props) {
       super(props);
       this.state = {
@@ -82,7 +82,7 @@ import {GetPiecesByMaintence} from "../../SQL/maintenance.sql.js"
       };
     }
   
-      UNSAFE_componentWillMount(){
+      componentDidMount(){
         this.setState({spinner:true})
          GetPiecesByMaintence(this.props.idDetails,(x)=>{
             this.setState({spinner:false, data:x,idDetails:this.props.idDetails})
@@ -106,14 +106,10 @@ import {GetPiecesByMaintence} from "../../SQL/maintenance.sql.js"
   }
 
 
-import {
-  Icon,
-  ListItem,
-} from '@ui-kitten/components';
-import {CodeBranch_Icon} from "../../assets/icons"
 
 
-export const ListPieces = (props) => {
+
+const ListPieces = (props) => {
 
   const renderItem = ({ item, index }) => (
     <ListItem
