@@ -17,7 +17,7 @@ import {
 import { MenuIcon } from '../../assets/icons';
 
 import {SettingScreenComponent} from "./setting.component.layout.js"
-import {RefreshFunct} from "../NewOrder/globalJSFunctions"
+import {RefreshFunct} from "../../globalFunc_Use/globalJSFunctions"
 
 export const SettingScreen = (props: SettingScreenProps): SafeAreaLayoutElement => {
   const [refreshing, setRefreshing] = React.useState(false);

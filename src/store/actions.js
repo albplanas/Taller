@@ -7,3 +7,6 @@ export const UPDATE_EDIT_SO              = "UPDATE_EDIT_SO";
 
 
 export const UPDATE_CLEAR_DIAGNOSIS_LIST   ="UPDATE_CLEAR_DIAGNOSIS_LIST";
+
+
+export const UPDATE_Clock_LIST            ="UPDATE_Clock_LIST";

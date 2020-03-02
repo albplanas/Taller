@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions'; 
-import {varModel} from "../../scenes/NewOrder/constructionModel"
+import {varModel} from "../../globalFunc_Use/constructionModel"
 const initialState = {
    
         diagnosis_List:[],

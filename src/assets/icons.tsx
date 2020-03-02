@@ -4,17 +4,38 @@ import {
   IconElement,
   Button
 } from '@ui-kitten/components';
+
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faTrashAlt,faEllipsisH,faCog, faWrench, faSearchMinus, faPaperPlane, faUser,faUserPlus,faUserSlash, faStethoscope, faCommentAlt,
          faCarBattery,faRing, faFilter, faChartPie,faUserTie,faUserSecret, faFolder, faFolderPlus, faFolderMinus, faImages, faCodeBranch, 
-         faSave } from '@fortawesome/free-solid-svg-icons'
+         faSave, 
+         faInfoCircle,
+         faTachometerAlt,
+         faExclamationTriangle,faCalendarAlt,
+         faFileInvoice,
+         faPercent,
+         faCalendarDay,
+         faFileSignature,
+         faClipboardCheck,
+         faFileContract,
+         faStopwatch,
+         faUserClock
+         } from '@fortawesome/free-solid-svg-icons'
 
 import { Alert,ToastAndroid } from 'react-native';
 
 
-
+export const Contract__Icon = ()=><FontAwesomeIcon icon={ faFileContract } size={ 48 } color={'#007bff'} /> //primary
+export const ClipboardCheck__Icon = ()=><FontAwesomeIcon icon={ faClipboardCheck } size={ 48 } color={'#28a745'} />//success
+export const INFO__Icon = (props)=><FontAwesomeIcon icon={ faInfoCircle } size={ 32 } color={props.color} />
+export const Alert__Icon = (props)=><FontAwesomeIcon icon={ faExclamationTriangle} size={ 32 } color={props.color} />
+export const Tachometer__Icon = ()=><FontAwesomeIcon icon={ faTachometerAlt} size={ 24} color={"#17a2b8"}  />
 export const ToolsIcon = ()=><FontAwesomeIcon icon={ faWrench } size={ 32 } color={"#17a2b8"} />
-export const Tools_Icon = (props)=><FontAwesomeIcon icon={ faWrench } size={ 32 } color={props.color===undefined?"#dc3545":props.color} />
+export const CalendarAlt_Icon = ()=><FontAwesomeIcon icon={ faCalendarAlt } size={ 32 } color={"#17a2b8"} />
+export const CalendarDate_Icon = ()=><FontAwesomeIcon icon={ faCalendarDay } size={ 32 } color={"#17a2b8"} />
+export const Percent_Icon = ()=><FontAwesomeIcon icon={ faPercent } size={ 32 } color={"#17a2b8"} />
+export const File_InvoiceIcon = ()=><FontAwesomeIcon icon={ faFileInvoice } size={ 32 } color={"#17a2b8"} />
+export const Tools_Icon = (props)=><FontAwesomeIcon icon={ faWrench } size={ 32 } color={props.color===undefined?"#dc3545":props.color} />//danger
 export const CogsIcon = ()=><FontAwesomeIcon icon={ faCog } pulse size={ 24 } color={"white"} />
 
 export const TrashAltIcon = ()=><FontAwesomeIcon icon={ faTrashAlt } size={ 24 } color="red" />
@@ -38,6 +59,27 @@ export const FolderSlash_Icon = (props)=><FontAwesomeIcon icon={ faFolderMinus} 
 export const Images_Icon = (props)=><FontAwesomeIcon icon={ faImages} size={ 32 } color={props.color===null?'#17a2b8':props.color} />
 export const CodeBranch_Icon = (props)=><FontAwesomeIcon icon={ faCodeBranch} size={ 24 } color={props.color===null?'#17a2b8':props.color} />
 export const Save_Icon = ()=><FontAwesomeIcon icon={ faSave} size={ 48 } color={'#28a745'} />
+export const FileSignature_Icon = ()=><FontAwesomeIcon icon={ faFileSignature} size={ 24 } color={'#28a745'} />
+
+
+export const StopWatch_Icon = (props)=><FontAwesomeIcon icon={faStopwatch} size={48} color={props.color} />
+export const UserWatch_Icon = ()=><FontAwesomeIcon icon={faUserClock} size={48} color={"#007bff"} />
+export const Stetoscope_Icon = ()=><FontAwesomeIcon icon={ faStethoscope} size={ 16 } style={{padding:30}} color={"#adb5bd"} />
+
+export const Clock_Icon = (style): IconElement => <Icon {...style}   name='clock-outline' />
+
+export const Briefcase_Icon = (style): IconElement => (
+  <Icon {...style} name='briefcase-outline' />
+);
+export const UnLock_Icon = (style): IconElement => (
+  <Icon {...style} name='unlock-outline' />
+);
+export const Lock_Icon = (style): IconElement => (
+  <Icon {...style} name='lock-outline' />
+);
+export const Add_User_Icon = (style): IconElement => (
+  <Icon {...style} name='person-add-outline' />
+);
 export const BookmarkIcon = (style): IconElement => (
   <Icon {...style} name='bookmark-outline' />
 );

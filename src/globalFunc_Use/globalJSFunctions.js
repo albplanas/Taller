@@ -1,4 +1,4 @@
-import {onRefreshing} from "../../SQL/onRefresh"
+import {onRefreshing} from "../SQL/onRefresh"
 import AsyncStorage from '@react-native-community/async-storage';
 import NetInfo from "@react-native-community/netinfo";
 import { Alert,ToastAndroid } from "react-native";
@@ -55,7 +55,7 @@ const RefreshFunct=(onUpdate_LIST,setRefreshing) => {
                 
                 
                 
-                  var setRefreshingExp=()=> {setRefreshing(false);console.log("false");
+                  var setRefreshingExp=()=> {setRefreshing(false);
                                               ToastAndroid.showWithGravityAndOffset(
                                                 'The app has been updated !!!',
                                                 ToastAndroid.LONG,

@@ -6,7 +6,6 @@ import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import App from './src/app.component';
 
-import SplashScreen from 'react-native-splash-screen'
 import { createStore,combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -15,6 +14,7 @@ import list from './src/store/reducers/listResourses';
 import diagnosisList from './src/store/reducers/diagnosis_State';
 import serviceOrder from './src/store/reducers/serviceOrder';
 import editServiceOrder from './src/store/reducers/editServiceOrder';
+import clock from './src/store/reducers/clock';
 
 import RNBootSplash from "react-native-bootsplash";
 import { StatusBar } from 'react-native';
@@ -25,7 +25,8 @@ const rootReducers = combineReducers({
   list          :   list,
   diagnosisList :   diagnosisList,
   serviceOrder  :   serviceOrder,
-  editSO        :  editServiceOrder
+  editSO        :   editServiceOrder,
+  clock         :   clock
 }) 
 
 const store = createStore(rootReducers);

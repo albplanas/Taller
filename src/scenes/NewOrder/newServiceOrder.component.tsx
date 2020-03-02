@@ -6,10 +6,10 @@ import {
   Button
 } from '@ui-kitten/components';
 
-import { Upload_Icon,Close_Icon,DoneAllIcon,} from '../../assets/icons';
+import { Upload_Icon,Close_Icon} from '../../assets/icons';
 
-import {varModel} from "../EditServiceOrder/constructionModel"
-import {ReviewChanges} from "./Review/ReviewChanges"
+import {ReviewChanges} from "./ReviewChanges"
+import {AppRoute} from "../../navigation/app-routes"
 
 
 
@@ -39,15 +39,24 @@ const [ExtraArrayOriginal, setExtraArrayOriginal] = React.useState([]);
 useEffect(() => {
          
           //Diagnosis
-          console.log("Render  NewServiceOrderScreen")
+       //  console.log("Render  NewServiceOrderScreen",props.diagnosis_List)
+
+if(props.route.params.item===null || props.route.params.item===undefined){
+  props.navigation.navigate(AppRoute.TODO);}
+else{     var elem= Array.isArray(props.ExtraInfo_Diagnosis)?
+          props.ExtraInfo_Diagnosis.filter(e=>e[0]===props.route.params.item.IDCatEquip).length>0?
+          props.ExtraInfo_Diagnosis.filter(e=>e[0]===props.route.params.item.IDCatEquip)[0]
+          :[props.route.params.item.IDCatEquip,false,false,""]
+          :[props.route.params.item.IDCatEquip,false,false,""]
+
+setDiagnosisArray(Array.isArray(props.diagnosis_List)?props.diagnosis_List.filter(e=>e.IDCatEquip===props.route.params.item.IDCatEquip):[])  ;
+setExtraArrayOriginal(elem)}
+
+}, [props.diagnosis_List,props.ExtraInfo_Diagnosis]);
 
 
-          setDiagnosisArray(Array.isArray(props.diagnosis_List)?props.diagnosis_List:[])  ;
-}, [props.diagnosis_List]);
 
-
-
- return (
+ return props.route.params.item!==null?(
     <Layout style={styles.container}>
 
       <TopNavigationComponent bottomTabsIndex={bottomTabsIndex} setBottomTabsIndex={setBottomTabsIndex} {...props}/>
@@ -64,7 +73,9 @@ useEffect(() => {
 
 
     </Layout>
-  );
+  ):<Layout style={{justifyContent:"center"}}>
+    <Text category="h2" status="danger">NO DIAGNOSIS FOUND 😟😟😟</Text>
+  </Layout>;
 }
 
 
@@ -87,8 +98,8 @@ const TopNavigationComponent = (props) => (
                 icon ={ Close_Icon}
                 status="danger"
                 onPress={()=>{props.navigation.goBack()}}
-                >Cancel This Order</Button>
-        <Button style={{margin:8,minWidth:200}} status="success" size='giant' icon ={Upload_Icon}>UPLOAD </Button>
+                >Continue Later</Button>
+        <Button style={{margin:8,minWidth:200}} status="success" size='giant' icon ={Upload_Icon}>Open New Order </Button>
     </Layout>
   </Layout>
 );

@@ -1,17 +1,18 @@
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import React  from 'react';
-import { StyleSheet, Image, Dimensions, Alert,ToastAndroid  } from 'react-native';
+import React, { useState,useEffect }  from 'react';
+import { StyleSheet, Image, Dimensions, Alert,ToastAndroid, Text  } from 'react-native';
 import {
     Layout,
-    Text,
     Button,
-    CardHeader,
-    Card 
   } from '@ui-kitten/components';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {TrashAltIcon,TrashButton} from "../assets/icons"
+
+
+
+
+
 
 
 
@@ -35,46 +36,93 @@ var storeData = async (label,value) => {
 
 export default Carouselexample =(props)=>{
 
+    const [activeSlide,setactiveSlide]=useState(0);
+    const [imgList,setimgList]=useState([]);
+
+    useEffect(()=>{
+
+            setimgList(props.imgList)
+          },[props.imgList.length])
+
     const _carouselR=(c) => { var _carousel = c; }
 
     const renderItem= ({item, index})=> {
         
-        const  newList=props.imgList.filter(e=>e.PictureID!==item.PictureID );
+        
+        const   onPress=()=>{
+          Alert.alert(
+            'Alert Title',
+            'My Alert Msg',
+            [
+              {
+                text: 'Cancel',
+                onPress:()=>null,
+                style: 'cancel',
+              },
+              {text: 'Delete', onPress: () => { const  newList=imgList.filter(e=>e.PictureID!==item.PictureID ); 
+                                                setimgList(newList)    
+                                                props.onUpload_Picture(props.label,newList);
+                                                storeData(props.label,newList);}},
+            ],
+            {cancelable: false},
+          );
+                                  
+                      }
+
                 return (
                     <CardImg    item={item} 
                                 width={props.Dimensions.imgWidth}
                                 height={props.Dimensions.imgHeight}
                                 list={props.imgList} 
                                 label={props.label}
-                                onPress={()=>{
-                                    
-                                        props.onUpload_Picture(props.label,newList);
-                                        storeData(props.label,newList);         
-                                    }}/>
+                                onPress={onPress}
+                                />
 
                 );
             }
-           
+
+    const PaginationDot =()=> {
+              
+              return (
+                  <Pagination
+                    dotsLength={props.imgList.length}
+                    activeDotIndex={activeSlide}
+                    containerStyle={{ backgroundColor: '#868e96',borderRadius:12 }}
+                    dotStyle={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: 3,
+                        marginHorizontal: 2,
+                        backgroundColor: 'rgba(255, 255, 255, 0.92)'
+                    }}
+                    inactiveDotStyle={{
+                        // Define styles for inactive dots here
+                    }}
+                    inactiveDotOpacity={0.4}
+                    inactiveDotScale={0.7}
+                  />
+              );
+          }        
+  
             return (
                 <Layout style={[styles.container,{minHeight:200}]}>
-                       {props.imgList.length===0?
-                       <Card style={styles.card} header={()=><CardHeader title='Notice !!!'/>} status='warning'>
-                            <Text >There is no picture in record ! , 
-                                    If you like to take pictures push the BUTTON (NEW !)</Text>
-                        </Card>:
+                       {imgList.length===0?
+                       <Text style={{textAlign:"center"}}>No Picture Found !!!</Text>:
                         <Layout style={styles.layoutGlobal}>
                      
                                     <Carousel
                                             ref={_carouselR}
-                                            data={props.imgList}
-                                            layout={'default'}
+                                            data={imgList}
+                                            layout={'stack'} layoutCardOffset={`18`}
                                             renderItem={renderItem}
                                             vertical={props.vertical===true?true:false}
                                             sliderWidth={props.Dimensions.sliderWidth}
                                             itemWidth={props.Dimensions.itemWidth}
                                             sliderHeight={props.Dimensions.sliderHeight}
                                             itemHeight={props.Dimensions.itemHeight}
+                                            onSnapToItem={setactiveSlide}
                                             />
+                                  {props.pagination? <PaginationDot/>   :null} 
                         </Layout>
                     } 
     
@@ -89,10 +137,10 @@ export default Carouselexample =(props)=>{
 
 
 const CardImg=(props)=>{
-    return   <Layout style={{flex:1,flexDirection:"row"}}>
+    return   <Layout style={{flex:1}}>
                
               <Image source={{uri: props.item.uri}} style={{width: props.width, height: props.height ,marginBottom:10}} />
-                 <TrashButton  deleteFunc={()=>props.onPress()} />      
+                 <Button status="danger" appearance="outline" style={{maxWidth:200,alignSelf:"center"}} onPress={props.onPress}>Delete </Button>      
             </Layout>
 }
 

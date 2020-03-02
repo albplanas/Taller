@@ -1,5 +1,4 @@
 export enum AppRoute {
-  AUTH = 'Auth',
   SIGN_IN = 'Sign In',
   SIGN_UP = 'Sign Up',
   RESET_PASSWORD = 'Reset Passrord',
@@ -7,9 +6,7 @@ export enum AppRoute {
   TODO = 'ToDo',
   TODO_IN_PROGRESS = 'ToDo In Progress',
   TODO_DONE = 'ToDo Done',
-  TODO_DETAILS = 'ToDo Details',
   PROFILE = 'Profile',
-  ABOUT = 'About',
   SETTING='Setting',
   MODAL='Diagnosis/Modal',
   CAMERA="Camera",
@@ -18,5 +15,6 @@ export enum AppRoute {
   SIGNATURE="Signature",
   EDIT_SERVICE_ORDER="Home/EDIT_SERVICE_ORDER",
   NEW_SERVICE_ORDER="NEW_SERVICE_ORDER",
-  DIAGNOSIS_FILE="DIAGNOSIS_FILE"
+  DIAGNOSIS_FILE="DIAGNOSIS_FILE",
+  RECORD_CLOCK="RECORD_CLOC"
 }

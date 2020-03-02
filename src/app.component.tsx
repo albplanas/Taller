@@ -1,6 +1,6 @@
 import React ,{PureComponent}from 'react';
-import { YellowBox } from 'react-native';
-import { NavigationNativeContainer } from '@react-navigation/native';
+import { YellowBox, Button, View} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   light,
@@ -18,8 +18,10 @@ import { connect,batch } from 'react-redux';
 import {getMultiple} from "./store/localStorage.js"
 import * as actionTypes from "./store/actions";
 
-const whyDidYouRender = require('@welldone-software/why-did-you-render');
-  whyDidYouRender(React);
+
+
+
+
 
 
 class AppWindow extends PureComponent{
@@ -72,9 +74,12 @@ render(){
         mapping={mapping}
         theme={this.props.theme==='dark'?dark:light}>
         <SafeAreaProvider>
-          <NavigationNativeContainer>
-            <AppNavigator initialRouteName={AppRoute.HOME}/>
-          </NavigationNativeContainer>
+
+
+        <NavigationContainer>
+             <AppNavigator initialRouteName={AppRoute.HOME}/>
+        </NavigationContainer>
+
         </SafeAreaProvider>
       </ApplicationProvider>
     </React.Fragment>
@@ -104,3 +109,11 @@ export default connect(mapStateToProps,mapDispatchToProps)(AppWindow)  ;
 YellowBox.ignoreWarnings([
   'RCTRootView cancelTouches',
 ]);
+
+
+/***
+ * 
+ *    <NavigationContainer>
+            <AppNavigator initialRouteName={AppRoute.HOME}/>
+          </NavigationContainer>
+ */

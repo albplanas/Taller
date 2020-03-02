@@ -1,15 +1,19 @@
 'use strict';
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet,  TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import {
   Button,
   Icon,
+  Text,
+  Spinner,
   Layout,
 } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import * as actionTypes from "../../store/actions";
+
+
 
 
 
@@ -30,9 +34,69 @@ const CloseIcon = (style) => (
 
 
 class CameraNavigator extends PureComponent {
-  
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      spinner: false
+    };
+  }
+
+  takePicture = async() => {
+
+    var storeData = async (newArr) => {
+      try {
+        await AsyncStorage.setItem("pictures_Diagnosis",newArr)
+      } catch (e) {
+        alert("Something was wrong: "+e)
+      }
+    }
     
+    if (this.camera) {
+
+            const options = { quality: 0.5, base64: true };
+
+            this.setState({spinner:true})
+            const data = await this.camera.takePictureAsync(options);
+            var newArr=this.props.pictures_Diagnosis.concat({
+              //illustration:data.base64,
+              uri:data.uri,
+              idSelect:this.props.route.params.idSelect,
+              IdMaintenance:this.props.route.params.IdMaintenance,
+              PictureID:parseFloat((Math.random()*1000000)+"").toFixed(0),
+              date:(new Date).toISOString().slice(0,10)
+            })
+            this.props.onUpdate_Settings("pictures_Diagnosis",newArr)
+            storeData(JSON.stringify(newArr));
+            this.setState({spinner:false})
+          // console.log(newArr.length);
+    }
+  };
+
+
+
+
+
+
+
+  render() {
+    const Back=() => this.props.navigation.goBack();
+
+    const onPress=this.props.route.params.from==="diagnosis"?this.takePicture.bind(this):
+                  this.props.route.params.from==='profile'?this.takePictureProfile.bind(this):
+                  this.props.route.params.from==='edit_SO'?this.takePictureSO.bind(this):
+                                                           ()=>{}
+    
+    const SpinnerButton=this.state.spinner===true?<Layout style={{width:"100%",minWidth:600,padding:20}}>   
+                                                  <Spinner style={{alignSelf:"center"}}size="giant"/>
+                                                  <Text style={{marginTop:20}}category="h3">Saving Picture ...</Text>
+                                                  </Layout>:
+                                                  <>
+                                                  <Button style={styles.button} status='success' appearance="ghost" onPress={onPress} icon={CameraIcon}/>
+                                                  <Button style={styles.button} status='danger'appearance="ghost" onPress={Back}  icon={CloseIcon}/>
+                                                  </>
+                                                       
+
+
     return (
       <View style={styles.container}>
         <RNCamera
@@ -59,13 +123,8 @@ class CameraNavigator extends PureComponent {
           }}
         />
         <Layout style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' ,width:"50%", marginLeft:"25%"}} level={"4"}>
-          
-          <Button style={styles.button} status='success' appearance="ghost" onPress={this.props.route.params.from==="diagnosis"?this.takePicture.bind(this):
-                                                                                            this.props.route.params.from==='profile'?this.takePictureProfile.bind(this):
-                                                                                            this.props.route.params.from==='edit_SO'?this.takePictureSO.bind(this):
-                                                                                                null
-                                                                                                } icon={CameraIcon}/>
-          <Button style={styles.button} status='danger'appearance="ghost" onPress={() => this.props.navigation.goBack()}  icon={CloseIcon}/>
+         
+          {SpinnerButton}
          
         </Layout>
       </View>
@@ -73,7 +132,7 @@ class CameraNavigator extends PureComponent {
   }
 
 
-    takePictureSO = async() => {
+ takePictureSO = async() => {
     
     var storeData = async (newArr) => {
       try {
@@ -127,29 +186,10 @@ class CameraNavigator extends PureComponent {
      // console.log(newArr.length);
     }
   };
-  takePicture = async() => {
-    var storeData = async (newArr) => {
-      try {
-        await AsyncStorage.setItem("pictures_Diagnosis",newArr)
-      } catch (e) {
-        alert("Something was wrong: "+e)
-      }
-    }
-    
-    if (this.camera) {
-      const options = { quality: 0.5, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      var newArr=this.props.pictures_Diagnosis.concat({
-        //illustration:data.base64,
-        uri:data.uri,
-        PictureID:parseFloat((Math.random()*1000000)+"").toFixed(0),
-        date:(new Date).toISOString().slice(0,10)
-      })
-      this.props.onUpdate_Settings("pictures_Diagnosis",newArr)
-      storeData(JSON.stringify(newArr));
-     // console.log(newArr.length);
-    }
-  };
+
+
+
+
 }
 
 const mapStateToProps = state => {

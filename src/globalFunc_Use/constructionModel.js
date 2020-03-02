@@ -1,5 +1,5 @@
-import {difference_A_B} from "../EditServiceOrder/Review/helperFunc"
-import {DescomposeNotes,deleteLabor,storageDiagnosis} from "../EditServiceOrder/Mechanics/auxiliarFunc";
+import {difference_A_B} from "./helperFunc"
+import {DescomposeNotes,deleteLabor,storageDiagnosis} from "./auxiliarFunc";
 
 
 

@@ -31,6 +31,8 @@ export const ModalFeatures =(props)=> {
  
   const onPressModal=() => setmodalVisible(true)
   const onClose=() => {
+
+    //console.log("OnClose_checkedList",checkedList)
     const newArr=checkedList.filter(e=>e.IDCatEquip===props.route.params.item.IDCatEquip)
     const filteredOriginal=originalList.filter(e=>e.IDCatEquip===props.route.params.item.IDCatEquip)
             if(JSON.stringify(filteredOriginal)!==JSON.stringify(newArr)){
@@ -71,7 +73,7 @@ export const ModalFeatures =(props)=> {
                     
                   </Modal>
 
-                  <Button  appearance='outline' style={{minWidth:100}} size='medium' 
+                  <Button  appearance='outline' style={{minWidth:110}} size='medium' 
                        onPress={onPressModal}
                    >{props.title}</Button>
                   

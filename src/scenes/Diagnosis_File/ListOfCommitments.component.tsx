@@ -14,34 +14,56 @@ import {
   List,
   ListItem,
 } from '@ui-kitten/components';
-import { StyleSheet  } from 'react-native';
+import { StyleSheet ,ToastAndroid } from 'react-native'; 
 
-import {InfoIcon,Info_Icon} from "../../assets/icons"
+import {Add_User_Icon,FileSignature_Icon,DoneAllIcon} from "../../assets/icons"
+
+
+
+
+
+
+
 
 
 export const ListOfCommitments = (props) => {
-
-
+  
+  const AddLabor_Button=()=><Button onPress={()=>{
+                                                      
+                                                      ToastAndroid.showWithGravityAndOffset(
+                                                        'New labor was added!',
+                                                        ToastAndroid.LONG,
+                                                        ToastAndroid.CENTER,
+                                                        25,
+                                                        50,
+                                                      );
+                                                    }} 
+                                    appearance="ghost" 
+                                    icon={()=><Add_User_Icon  fill="#007bff"/>}/>
 
   const renderItemIcon = (style) => (
     <Icon {...style} name='person'/>
   );
 
+
+
   const renderItem = ({ item, index }) => {
 
     const onPress=()=>props.setItemselect(index);
-
-    const renderItemAccessory = (style) =>  <Button style={style} status ="info"  icon ={InfoIcon} onPress={onPress}> Info</Button>
-console.log(props.itemselect)
+    const renderItemAccessory = (style) => (
+     <Button appearance="ghost" onPress={()=>console.log("fg")} icon={item.signed===true?DoneAllIcon:FileSignature_Icon}/>
+    );
+  
     return (
 
         <ListItem
-          title={`${item.title} ${index + 1}`}
+          title={item.mechanic}
           titleStyle={props.itemselect===index?styles.titleselect:null}
-          description={`${item.description} ${index + 1}`}
+          description={item.date}
           style={props.itemselect===index?styles.select:null}
-          icon={renderItemIcon}
           accessory={renderItemAccessory}
+          icon={renderItemIcon}
+          onPress={onPress}
         />
       );
   }
@@ -50,10 +72,11 @@ console.log(props.itemselect)
   return (
     <>
     <CardHeader
-    title="History's Commitments"
-    titleStyle={{fontSize:16}}
-    description='By Mechanics'
-  />
+                title="History's Commitments"
+                titleStyle={{fontSize:16}}
+                description='By Mechanics'
+                icon={AddLabor_Button}
+              />
     <List
         style={{minWidth:500}}
       data={props.enablelist}
@@ -69,8 +92,11 @@ const styles = StyleSheet.create({
       backgroundColor: "#212529",
       
     },
+    buttonGroup:{
+      margin:8
+    },
     titleselect:{
-        color:'#007bff'
+        color:'#ffc107'
     }
   });
   

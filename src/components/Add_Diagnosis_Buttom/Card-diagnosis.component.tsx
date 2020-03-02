@@ -54,11 +54,8 @@ export const CardDiagnosis =(props)=>
                     <Card style={{width:800,height:600,marginLeft:240,marginTop:100}} 
                                             header={()=><Header allowUpdate={props.allowUpdate} onClose={props.onClose}/>}  status='success'
                                       >
-
-                              <ScrollView style={{marginBottom:80}} >
-                              
-                                  <Full_List {...props}/>
-                              </ScrollView>
+                          <Full_List {...props}/>
+                             
                   </Card>
 
 

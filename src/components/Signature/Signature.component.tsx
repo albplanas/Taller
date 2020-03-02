@@ -58,9 +58,7 @@ export const SignUpScreen = (props: SignUpScreenProps): LayoutElement => {
           onBackPress={props.navigation.goBack}
         />
       </ImageBackground>
-      <Layout style={styles.formContainerOne}>
-      <CardWithHeader item={props.route.params.item}/>
-      </Layout>
+ 
       <Layout style={styles.formContainer}>
         <Layout style={{minWidth:600,}}>
               <Select
@@ -95,7 +93,7 @@ export const SignUpScreen = (props: SignUpScreenProps): LayoutElement => {
 
 const styles = StyleSheet.create({
   appBar: {
-    height: 232,
+    height: 296,
   },
   select: {
     marginTop: 8,

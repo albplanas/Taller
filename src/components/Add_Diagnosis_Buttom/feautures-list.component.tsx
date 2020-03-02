@@ -10,7 +10,9 @@ import {
 import {EditIcon_1,Camera_Icon,InfoIcon} from "../../assets/icons"
 
 import {StyleSheet,Alert,ToastAndroid} from "react-native"
-import {TextArea} from "../TextArea/TextArea"
+import {TextArea} from "../MainComponents/TextArea"
+
+
 
 
 
@@ -28,25 +30,37 @@ import {TextArea} from "../TextArea/TextArea"
     const [textExp,setTextExp] =useState("");
     const [openSave,setOpenSave]=useState(false);
 
+    const OpenRequest=()=>{
+      
+              const idmechanic=props.idmechanic.length>0?props.idmechanic[0].IdEmployee:null;
+              const arrSimilar=props.checkedList.filter(x=>x.activity==='enable' ).filter(x=>x.feature+""===props.id+"" || x.IDCatEquip===props.IDCatEquip );
+              const IdMaintenance=arrSimilar.length===0?parseFloat(Math.random()*1000000+"").toFixed(0):arrSimilar[0].IdMaintenance
+              const arr=props.checkedList.filter(x=>x.feature+""!==props.id+"" || x.IDCatEquip!==props.IDCatEquip || x.idmechanic!==idmechanic);
+
+            // console.log("PROPS",props.equipmentCod)
+              
+              var d= new Date;
+              var newObject={
+                                IdMaintenance:IdMaintenance,
+                                idmechanic:idmechanic,
+                                signed:true,
+                                feature:props.id,
+                                categoryId:props.categoryId,
+                                idSelect:parseFloat(Math.random()*1000000+"").toFixed(0),
+                                IDCatEquip:props.IDCatEquip,
+                                equipmentCod:props.equipmentCod,
+                                activity: "enable",
+                                description:textDes,
+                                explanation:textExp,
+                                date:d.toISOString().slice(0,10)
+                              }
+
+            //  console.log("newObject",newObject)
+              !checked?props.setCheckedList(arr):props.setCheckedList(arr.concat(newObject))
+    }
+
 
     const onCheckBoxCheckedChange = (index) => {
-
-      var arr=props.checkedList.filter(x=>x.feature+""!==props.id+"");
-      console.log("PROPS",props.equipmentCod)
-      var d= new Date;
-      var newObject={
-                        idmechanic:props.idmechanic.length>0?props.idmechanic[0].IdEmployee:null,
-                        feature:props.id,
-                        categoryId:props.categoryId,
-                        idSelect:parseFloat(Math.random()*1000000+"").toFixed(0),
-                        IDCatEquip:props.IDCatEquip,
-                        equipmentCod:props.equipmentCod,
-                        activity: "enable",
-                        description:textDes,
-                        explanation:textExp,
-                        date:d.toISOString().slice(0,10)
-                      }
-      checked?props.setCheckedList(arr):props.setCheckedList(arr.concat(newObject))
       setChecked(!checked);
     };
 
@@ -67,27 +81,18 @@ import {TextArea} from "../TextArea/TextArea"
         checked={checked}
         onChange={onCheckBoxCheckedChange}
         disabled={props.disabled}
+        key={"diagnosis_checkBox"+props.id+index}
       />
     );
 
     const renderEditElements = (style, index) => (
-      <Layout>
-                <Layout style={{flexDirection:"row"}}>
+              <Layout style={{flexDirection:"row"}}>
                     <Button appearance="ghost" disabled={!checked } status="warning" icon={Camera_Icon}/>
               </Layout>
-
-    </Layout>
     );
 const setText=()=>{
 
-  var newObj=props.checkedList.map(ele=>{
-                                            return ele.feature+""===props.id+""?{
-                                                                                  ...ele,
-                                                                                  "description":textDes,
-                                                                                  "explanation":textExp
-                                                                                }:ele
-                                          });
-  props.setCheckedList(newObj);
+  OpenRequest();
   setOpenSave(false);
   ToastAndroid.showWithGravityAndOffset(
                                           'Saving data ...',
@@ -101,7 +106,7 @@ const setText=()=>{
   <Layout>
        <ListItem
         title={props.name}
-        style={{padding:20}}
+        style={{padding:10}}
         titleStyle={{fontSize:20}}
         accessory={renderEditElements}
         icon={renderAccessory}
@@ -128,8 +133,7 @@ export  const Full_List=(props)=>{
                                 var checkedL=arr.length>0?true:false
                                 var disabled=arr.length>0?arr[0].activity==='enable'?false:true:false
                              // console.log(props.elem)
-                                return <Layout>
-                                          <ListItemModal 
+                                return <ListItemModal 
                                                       name={el.Description}
                                                       IDCatEquip={props.IDCatEquip}
                                                       equipmentCod={props.equipmentCod}
@@ -142,8 +146,6 @@ export  const Full_List=(props)=>{
                                                       Checked={checkedL}
                                                       disabled={ disabled} 
                                                       />
-                                                        
-                                        </Layout>
                               })
     return(
       <Layout style={{justifyContent: 'center',}}>

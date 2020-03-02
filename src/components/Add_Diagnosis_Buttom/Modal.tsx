@@ -7,19 +7,36 @@ import {
 } from '@ui-kitten/components';
 
 import {DiagnosisChart}from "./DiagnosisTab"
+import AsyncStorage from '@react-native-community/async-storage';
+
+
+var storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('diagnosis_List', JSON.stringify(value))
+    } catch (e) {
+      alert("Something was wrong: "+e)
+    }
+  }
 
 
 
 
+  import whyDidYouRender from "@welldone-software/why-did-you-render";
+
+  whyDidYouRender(React);
+
+  export class AddDiagnosisModal extends React.PureComponent {
+    static whyDidYouRender = true
+    render(){
+      return (
+        <AddDiagnosisModalSample {...this.props}/>
+      )
+    }
+  }
 
 
 
-
-
-
-
-
-export const AddDiagnosisModal =(props)=>{
+export const AddDiagnosisModalSample =(props)=>{
 
 
 
@@ -36,9 +53,12 @@ useEffect(() => {
     setDiagnosisArrayEdition(props.diagnosis_List.filter(e=>e.IDCatEquip===props.route.params.item.IDCatEquip));
 
          }, [props.diagnosis_List.length]);
-
+          const Diagn_Update=(val)=>{
+                                        props.onUpdate_DIAGNOSIS("diagnosis_List",val);
+                                        storeData(val);
+                                      }
          const uploadData=(val)=>{
-          return props.route.params.originalRoute==="diagnosis"?props.onUpdate_DIAGNOSIS("diagnosis_List",val):null
+          return props.route.params.originalRoute==="diagnosis"?Diagn_Update(val):null
          }
 
 
