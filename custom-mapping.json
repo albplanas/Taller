@@ -1,0 +1,20 @@
+{
+    "components": {
+      "Button": {
+        "meta": {
+          "appearances": {
+            "filled": {
+              "default": true // <-- The default appearance is `filled`
+            }
+          },
+          "variantGroups": {
+            "status": {
+              "pink":{
+                "backgroundColor": "pink"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

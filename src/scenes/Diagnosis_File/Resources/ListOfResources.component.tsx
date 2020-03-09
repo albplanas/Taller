@@ -8,7 +8,7 @@
 
 import React, { useEffect } from 'react';
 import {
-  Layout,
+  Layout,Text, Button
 } from '@ui-kitten/components';
 import Carouselexample from "../../../components/Carousel"
 
@@ -16,22 +16,17 @@ import Carouselexample from "../../../components/Carousel"
 import  { ModeEdit_Off } from "./ModeEdit_Off.component"
 import {ModeEdit_On} from "./ModeEdit_On.component";
 import {TopNavigationResources} from "./TopNavigator.component";
-import AsyncStorage from '@react-native-community/async-storage';
-import {ToastAndroid} from "react-native"
 
-var storeData = async (key,value) => {
-    try {
-      await AsyncStorage.setItem(key, JSON.stringify(value))
-    } catch (e) {
-      alert("ERROR","Something was wrong: "+e)
-    }
-  }
+
+import { default as customColor } from '../../../styles/color.json';
+import { AppRoute } from '../../../navigation/app-routes';
+
+
 
 // Main Component
 export const ListOfResources = (props) => {
 
   const [item, setItem] = React.useState(null);
-  const [pictureArray,setpictureArray] = React.useState([]);
   const [edit,setEdit]=React.useState(false);
   const [editNOavailable,seteditNOavailable]=React.useState(true);
 //EditFeatures
@@ -50,27 +45,21 @@ export const ListOfResources = (props) => {
         setExplanation(newItem===null?"":newItem.explanation);
         setPieces([]);
         setEdit(false)
-        seteditNOavailable(false);
-
+        seteditNOavailable(newItem===null?true:newItem.mechanic===props.userName?false:true);
+       
     }, [props.itemselect]);
 
 
-const onUpload_Picture=(arr)=>props.onUpdate_DIAGNOSIS("pictures_Diagnosis",arr)
-
-const onDelete=()=>{
-    var newList=props.diagnosis_List.filter(e=>e.idSelect!==item.idSelect);
-    ToastAndroid.showWithGravityAndOffset(
-      'This report is being eliminated 🗑🗑🗑!',
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-      25,
-      50,
-    );
-    props.onUpdate_DIAGNOSIS("diagnosis_List",newList);
-    storeData("diagnosis_List",newList)
-}
 
 
+const onPressCamera=()=>{
+
+                      props.navigation.navigate(AppRoute.CAMERA, {
+                                                from : 'diagnosis',
+                                                idSelect:props.enablelist.map(e=>e.idSelect)[props.itemselect],
+                                                IdMaintenance:item==null?null:item.IdMaintenance
+                                                  })
+  }
 
 
   return (
@@ -79,15 +68,17 @@ const onDelete=()=>{
       <TopNavigationResources subtitle={item==null?"":item.mechanic+" / "+ item.date}
                               idSelect={item==null?null:item.idSelect}
                               IdMaintenance={item==null?null:item.IdMaintenance}
+                              onPressCamera={onPressCamera}
                               navigation={props.navigation}
                               edit={edit}
                               setEdit={setEdit}
-                              onDelete={onDelete}
+                              onDelete={props.onDelete}
                               editNOavailable={editNOavailable}
                               UPDATE_Clock_LIST={props.UPDATE_Clock_LIST}
                               Clock_List={props.Clock_List}
                               FeaturesList={props.FeaturesList}
                               item={item}
+                              type={props.type}
 
       />
       {
@@ -98,23 +89,33 @@ const onDelete=()=>{
                             />:
                             <ModeEdit_On    description={description} setdescription={setdescription} 
                                             explanation={explanation} setExplanation={setExplanation}
+                                            type={props.type}
                                             pieces={pieces}           setPieces={setPieces}/>
       }
-     
+
+     <Text style={{marginTop:10,marginLeft:10}}>{"Pictures\t\t( " +props.pictureArray.length+ " )"}</Text>
+
+
       <Carouselexample 
                                                     imgList={props.pictureArray}  
-                                                    onUpload_Picture={onUpload_Picture}
+                                                    onDelete_Picture={props.onDelete_Picture}
                                                     vertical={false}
-                                                    label="pictures_Diagnosis"
                                                     pagination={false}
+                                                    deleteDisable={editNOavailable}
                                                     Dimensions={{
-                                                      itemWidth:500,
+                                                      itemWidth:600,
                                                       sliderWidth:750,
                                                       imgWidth:450,
-                                                      sliderHeight:220,
-                                                      itemHeight:220,
-                                                      imgHeight:220
+                                                      sliderHeight:320,
+                                                      itemHeight:320,
+                                                      imgHeight:320
                                                     }}/> 
+
+      {props.pictureArray.length===0?<Button  style={{backgroundColor:customColor.purple,width:200,
+                                                      alignSelf:"center",marginBottom:200}} 
+                                              size="giant" 
+                                              onPress={onPressCamera}
+                                              >Add Picture</Button>:null}                                              
         
     </Layout>
   );

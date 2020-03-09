@@ -7,7 +7,7 @@ import {
 
  
   import {List_Icon,PersonIcon,FolderIcon,Clock_Icon,Briefcase_Icon} from "../../assets/icons"
-  import {Header} from "./header"
+  import {Header,HeaderNull} from "./header"
   import {Footer} from "./footer"
 
   import {AppRoute} from "../../navigation/app-routes"
@@ -45,15 +45,14 @@ import {
 
   React.useEffect(() => {
                            setItem(props.FeaturesTruck.filter(e=>e.IDCatEquip===1)[0])
-                            //console.log("props",props.current_ClockIn)
                            setcurrent(props.Clock_List.filter((x,index)=>index+""===props.current_ClockIn+""))
 
                           }, [JSON.stringify(props.Clock_List)]);
 
                          const  onPressUser         = () => props.navigation.navigate(AppRoute.SETTING)
-                         const  onPressChangeOrder  = () =>props.navigation.navigate(AppRoute.TODO);
-                         const  onPressChangeDiagn  = () =>props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item});
-                         const  onPressGetRecords   = () =>props.navigation.navigate(AppRoute.RECORD_CLOCK);
+                         const  onPressChangeOrder  = () => props.navigation.navigate(AppRoute.TODO);
+                         const  onPressChangeDiagn  = () => item===null|| item===undefined?props.navigation.navigate(AppRoute.TODO):props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item});
+                         const  onPressGetRecords   = () => props.navigation.navigate(AppRoute.RECORD_CLOCK);
                          const  onRouteSelect = (index) => {
                                                                   const route = drawerData[index];
 
@@ -89,14 +88,20 @@ import {
        const    FooterComponent = ()=> <Footer ClockOutButton={ClockOut_IN_Button} 
                                                 initialCheck={isCheck}/>                     
                                     
-                                    return (
-                                        <Drawer
-                                            data={drawerData}
-                                            header={HeaderComponent}
-                                            footer={FooterComponent}
-                                            onSelect={onRouteSelect}
-                                        />
-                                    );
+                                    return props.Clock_List.length>0?(
+                                                                              <Drawer
+                                                                                  data={drawerData}
+                                                                                  header={HeaderComponent}
+                                                                                  footer={FooterComponent}
+                                                                                  onSelect={onRouteSelect}
+                                                                              />
+                                                                          ):(
+                                                                            <Drawer
+                                                                                data={drawerData}
+                                                                                header={HeaderNull}
+                                                                                onSelect={onRouteSelect}
+                                                                            />
+                                                                        );
                                 }
 
 

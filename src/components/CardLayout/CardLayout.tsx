@@ -23,7 +23,7 @@ import {ListChanges} from "./List";
  *  */
 
 export const CardLayout=(props)=>{
-    return  <Layout style={[styles.layout,{padding:5,minHeight:450,maxHeight:600}]} level='2'>
+    return  <Layout style={[styles.layout,{padding:5,minHeight:450,maxHeight:500}]} level='2'>
                 <Card style={[styles.card,{width:props.width}]} header={()=><HeaderCard actionHeaderLeft={props.actionHeaderLeft}icon={props.iconHead} description={props.description} title={props.title}/>} status='success'>
                     <Layout style={styles.rowContainer}>
                         <ListChanges {... props}/>
@@ -43,7 +43,7 @@ const HeaderCard=(props)=>{
                       
                         {props.description===undefined?null:<Text category="c1" status="warning">{"( "+props.description+" )"}</Text>} 
                           <Button icon={PlusIcon} 
-                                                      status={"primary"} 
+                                                      status="primary" 
                                                       size="large" 
                                                       style={{marginLeft: 'auto',marginRight:18,borderRadius:30,width:60,height:60}} 
                                                       onPress={props.actionHeaderLeft}/>

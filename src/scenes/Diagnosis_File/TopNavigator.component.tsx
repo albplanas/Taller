@@ -5,13 +5,12 @@
 
 import React from 'react';
 import {
-  Icon,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
-
+import {ArrowLeft_Icon} from "../../assets/icons"
 const BackIcon = (style) => (
-  <Icon {...style} name='arrow-back'/>
+  <ArrowLeft_Icon {...style} size={40} color={"white"}/>
 );
 
 

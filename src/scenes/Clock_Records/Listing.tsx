@@ -13,8 +13,18 @@ import {FileSignature_Icon} from "../../assets/icons";
 import { StyleSheet,Alert } from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
 
+import { batch } from 'react-redux';
+import {OpenClockInClock,CloseClockInClock} from "../../globalFunc_Use/clock"
 
 
+
+var StateManager=(arr,ind,updFunc)=>{
+
+    batch(() => {   
+                    updFunc("Clock_List",arr)
+                    updFunc("current_ClockIn",ind)
+                })
+}
 
 export const ListingCase = (props) => {
 
@@ -64,7 +74,11 @@ export const ListingCase = (props) => {
                 
                 var isStillOpen=item.clockRecords.filter(e=>e.clock_out===null).length>0;
 
-                const  onPressDetails    = ()=>null;
+                const  onPressDetails    = ()=>{
+
+                    isStillOpen? CloseClockInClock(props.Clock_List,(arr)=>props.UPDATE_Clock_LIST("Clock_List",arr))
+                                :  OpenClockInClock(props.Clock_List,item,(arr,ind)=>StateManager(arr,ind,props.UPDATE_Clock_LIST))
+                }
 
                 const renderDetails = (style) => (
                     <Button status={isStillOpen?"danger":"warning"} onPress={onPressDetails}>{isStillOpen?"Clock Out":"Clock In"}</Button>
@@ -90,14 +104,14 @@ export const ListingCase = (props) => {
       <>
             <ListItem   title={"Records"}
                         titleStyle={{fontSize:32,padding:20}}
-                        style={{marginHorizontal:85}}
+                        style={{marginHorizontal:45,}}
                         accessory={renderSign}
                         />
             <Divider/>
             <List
                 data={props.Clock_Arr}
                 renderItem={renderItem}
-                style={{width:700}}
+                style={{width:780}}
                 />
     </>
   );

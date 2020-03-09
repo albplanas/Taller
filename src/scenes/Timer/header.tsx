@@ -2,16 +2,26 @@
 import React,{Component} from 'react';
 
 import {
-    DrawerHeaderFooter
+    DrawerHeaderFooter,
   } from '@ui-kitten/components';
 
  
-  import {UserWatch_Icon} from "../../assets/icons"
+  import {UserWatch_Icon,Alert_Icon} from "../../assets/icons"
 
 
 
 
-
+ export  const HeaderNull=()=>{
+    return  <DrawerHeaderFooter
+                            
+                          title={"CLOCK's PARAMETERS NO DEFINED"}
+                          titleStyle={{color:"#ffc107"
+                          ,fontSize:24,paddingTop:15}}
+                          description={"Select a Service Order, a diagnosis belonging to it,and a particular Mechanic who is responsable for this work"}
+                          icon={()=><Alert_Icon fill="#ffc107" />}
+                          style={{paddingBottom:30}}
+                        />
+}
 
 
   

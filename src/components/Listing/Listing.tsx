@@ -36,6 +36,7 @@ export const Listing = (props) => {
 
                                                                               return arrshow[index]?<Button   status={button.status} 
                                                                                                               icon={button.icon} 
+                                                                                                              key={index+"-button-"+item.cod}
                                                                                                               style={style}
                                                                                                               onPress={onPress}>{button.title}</Button> :null
                                                                       })}           
@@ -52,7 +53,7 @@ export const Listing = (props) => {
                                                   title={"If you don't find your equipment above try to refine the search typing more characters"}
                                                   titleStyle={{fontSize:20,padding:12,color:"#fd7e14"}}
                                                   icon={SearchIcon}
-                                                  key={props.keylist+"lastItem"}
+                                                  key={props.keylist+index}
                                                 />:
                                       <ListItem
                                                     title={item.cod}
@@ -60,7 +61,7 @@ export const Listing = (props) => {
                                                     titleStyle={{fontSize:30,padding:8}}
                                                     icon={CarIcon}
                                                     accessory={(style)=>renderItemAccessory(item,style)}
-                                                    key={props.keylist+item.cod+index}
+                                                    key={props.keylist+index+"@"}
                                                   />
 
   } 
@@ -77,6 +78,7 @@ export const Listing = (props) => {
   return  <>
            
               <Input
+              key={"serach"+props.keylist}
                     placeholder='SEARCH BY TRUCK ...'
                     value={text}
                     onChangeText={setText}

@@ -19,7 +19,7 @@ import { InputComponent }  from "../MainComponents/Input.component"
       
       const renderItem = ({ item, index }) => {
 
-                                             const   onPress=()=>{}
+                                            
                           
                                    
                                                                             

@@ -78,6 +78,7 @@ const  dataPicturesConstruction =(id,SO_Picture_OffLine,PictureArrayOriginal)=>{
                                                     date:""}})) 
 }   
 
+
 const varModel=(item)=>{
 
     return {
@@ -108,9 +109,45 @@ const varModel=(item)=>{
           } 
   }
 
+
+  function GetDataFeatures(pack,itemEquip,enableList,idmechanic,IdMaintenance){
+    
+            var d= new Date;
+            const dateToday=d.toISOString().slice(0,10);
+            var reduceList=enableList.filter(e=>e.IDCatEquip===itemEquip.IDCatEquip)
+          
+          
+          return pack.Subarr.map(x=>{
+          
+          
+            const elem=reduceList.filter(s=>s.feature===x.SubId);
+          
+                              return {
+                                IdMaintenance:elem.length>0?elem[0].IdMaintenance:IdMaintenance,/* it must be passed trhough the route and created inside of Modal Component */
+                                signed:false,
+                                categoryId:pack.Id,
+                                idSelect:parseFloat(Math.random()*1000000+"").toFixed(0),
+                                IDCatEquip:itemEquip.IDCatEquip,
+                                equipmentCod:itemEquip.cod,
+                                feature:x.SubId,
+                                Description:x.Description,
+                                check:elem.length>0?true:false,
+                                activity: elem.length>0?"disable":"enable",
+                                description:elem.length>0?elem[0].description:"",
+                                explanation:elem.length>0?elem[0].explanation:"",
+                                date:elem.length>0?elem[0].date:dateToday,
+                                idmechanic:elem.length>0?elem[0].idmechanic:idmechanic[0].IdEmployee
+                              }
+          })
+  }
+
+
+
 export {
     dataDiagnosisConstruction ,
     dataMechanicsConstruction,
     dataPicturesConstruction,
-    varModel
+    varModel,
+
+    GetDataFeatures
 }                                

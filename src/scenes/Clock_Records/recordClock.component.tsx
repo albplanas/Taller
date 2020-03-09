@@ -1,22 +1,26 @@
 import React ,{useEffect} from 'react';
 import { StyleSheet ,Alert } from 'react-native';
 import {
-  Layout, Divider,
+  Layout, Divider,Text, ListItem,Button
 } from '@ui-kitten/components';
 
 import {TopNavigationCase} from "./Topnavigator.component"
 import {Filter} from "./Filter.component"
 import {ListingCase} from "./Listing"
-
+ import {AppRoute} from "../../navigation/app-routes"
+import {Alert_Icon} from "../../assets/icons"
 
 export const RecordClockScreen =(props)=>{
+  
   const [Clock_Arr, setClock_Arr] = React.useState([]);
   const [iniClock_Arr, setIniClock_Arr] = React.useState([]);
 /******************* STATE TO SUBMIT *******************/
 useEffect(()=>{
+
   setClock_Arr(props.Clock_List);
   setIniClock_Arr(props.Clock_List)
-},[JSON.stringify(props.Clock_List)])
+
+  },[JSON.stringify(props.Clock_List)])
 
 //const [itemselect, setItemselect] = React.useState(-1);
 
@@ -28,8 +32,8 @@ const ApplyFilter=(options)=>{
 
   setClock_Arr(filterArr);
 }
-
-
+const  onPressChangeOrder  = () => props.navigation.navigate(AppRoute.TODO);
+const DefineRecord=()=><Button status="info" appearance={"outline"} onPress={onPressChangeOrder}>Define Clock</Button>
  return (
     <Layout style={styles.container} level="4">
         <TopNavigationCase navigation={props.navigation}/>
@@ -41,10 +45,22 @@ const ApplyFilter=(options)=>{
                                     ApplyFilter={ApplyFilter}/>
                 </Layout>
                 <Layout style={styles.layout} level="2">
+                            {
+                              Clock_Arr.length >0 ? <ListingCase  Clock_Arr={Clock_Arr}
+                                                                  navigation={props.navigation}
+                                                                  UPDATE_Clock_LIST={props.UPDATE_Clock_LIST}
+                                                                  Clock_List={props.Clock_List}
+                                                                  />
+                                                  : <ListItem
+                                                      title={"NO RECORDS FOUND"}
+                                                      titleStyle={{color:"#ffc107" ,fontSize:24,paddingTop:15}}
+                                                      style={{width:600}}
+                                                      description={"Select a Service Order, a diagnosis belonging to it,and a particular Mechanic who is responsable for this work"}
+                                                      icon={()=><Alert_Icon fill="#ffc107"/>}
+                                                      accessory={DefineRecord}
+                                                     />
+                            }                    
 
-                          <ListingCase  Clock_Arr={Clock_Arr}
-                                        navigation={props.navigation}/>
-                                        
                 </Layout>
               </Layout>
 

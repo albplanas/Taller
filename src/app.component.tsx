@@ -18,6 +18,7 @@ import { connect,batch } from 'react-redux';
 import {getMultiple} from "./store/localStorage.js"
 import * as actionTypes from "./store/actions";
 
+//import { default as customMapping } from '../custom-mapping.json'; // <-- import custom mapping
 
 
 
@@ -72,7 +73,8 @@ render(){
       <IconRegistry icons={EvaIconsPack}/>
       <ApplicationProvider
         mapping={mapping}
-        theme={this.props.theme==='dark'?dark:light}>
+       // customMapping={customMapping} // <-- apply custom mapping
+        theme={this.props.theme!=='light'?dark:light}>
         <SafeAreaProvider>
 
 

@@ -87,7 +87,7 @@ export const ReviewChanges =(props)=>{
     useEffect(()=>{
 
      const data= ExtraArrayChanges!==null?ExtraInfoModel(ExtraArrayChanges,props.ChangeExtra):[];
- 
+
      setExtraInfoData(data)
     },[JSON.stringify(ExtraArrayChanges)])
 
@@ -189,7 +189,7 @@ export const ReviewChanges =(props)=>{
           
           
           const ExtraInfoModel=(arr,funct)=>{
-               
+                
                                     return[{
                                                 type:"checkbox",
                                                 setThisValue:(val)=>{

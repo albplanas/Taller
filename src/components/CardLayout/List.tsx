@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,ScrollView, Alert } from 'react-native';
+import { StyleSheet,ScrollView, Alert,Image } from 'react-native';
 import {
   ListItem,
   List,
@@ -27,6 +27,7 @@ import {AppRoute} from "../../navigation/app-routes"
                                                                                                                                   item:item,
                                                                                                                                   DiagnosisArrayOriginal:[1],
                                                                                                                                   idmechanic:props.idmechanic,
+                                                                                                                                  type:props.type
                                                                                                                             }):null}
                                             const GoSignature=()=>{ 
                                                                   // console.log("props.navigation",props.navigation) 
@@ -64,14 +65,20 @@ import {AppRoute} from "../../navigation/app-routes"
                                             const src=Img_Src[item.categoryId-1];
                                             const buttonSign=()=><Button appearance="outline" onPress={onSign} icon={props.iconSet()[1]} />
 
-                                            const icon=()=><Avatar style={styles.avatar} size='large' source={src.src}/>   
+                                            const icon=()=><Avatar style={styles.avatar}  source={src.src}/>   
                                                                         
                                             return <ListItem
                                                                                   title={item.Title}
+                                                                                  titleStyle={{fontSize:20,marginBottom:5}}
                                                                                   status="primary"
                                                                                   description={item.SubTitle}
+                                                                                  descriptionStyle={{fontSize:16}}
                                                                                   onPress={onPress}
-                                                                                  accessory={item.signed===true?props.iconSet()[2]:buttonSign}
+                                                                                  accessory={
+                                                                                                props.type==="diagnosis"?null
+                                                                                                                      :item.signed===true?
+                                                                                                                                            props.iconSet()[2]:buttonSign
+                                                                                                                                          }
                                                                                   icon={icon}
                                                                                   key={"review_diag_"+item.SubTitle+index}
                                                                                 />
@@ -85,7 +92,7 @@ import {AppRoute} from "../../navigation/app-routes"
         return     <List
                           data={props.data}
                           renderItem={renderItem}
-                          style={{maxHeight:340}}
+                         style={{maxHeight:340}}
                         />
   };
 
@@ -103,8 +110,17 @@ import {AppRoute} from "../../navigation/app-routes"
       margin: 8,
       width:64,
       height:64,
-      backgroundColor:'#ADD8E6'
+      backgroundColor:'white'
     },
+    headerImage: {
+      flex: 1,
+      height: 100,
+      width:100,
+      alignSelf:"center",
+      marginBottom:5
+     
+      
+    }
   });
   
   

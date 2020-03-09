@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ImageBackground,
-  StyleSheet,
+  StyleSheet,Alert
 } from 'react-native';
 import {
   EdgeInsets,
@@ -13,14 +13,11 @@ import {
   Layout,
   Select,
   Input,
-  Card,
-  Divider,
-  CardHeader,
-  CheckBox,
-  Text,
   LayoutElement,
+  Divider,Text
 } from '@ui-kitten/components';
 import { SignUpScreenProps } from '../../navigation/auth.navigator';
+
 import { Toolbar } from '../../components/toolbar.component';
 
 import {EyeOffIcon,EyeIcon}from "../../assets/icons";
@@ -46,7 +43,22 @@ export const SignUpScreen = (props: SignUpScreenProps): LayoutElement => {
   var key=password.filter(e=>e.text===keyName).length>0?
           password.filter(e=>e.text===keyName)[0].password:""
 
- 
+ const Pass=()=>{
+                  props.route.params.callback()
+                  props.navigation.goBack();
+ }
+ const Reject=()=>{
+  Alert.alert(
+    'Incorrect Password',
+    'Check your password and try again',
+    [
+      
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ],
+    {cancelable: false},
+  );
+ }
+ const onPress=()=>{value.length>0 ? value===key?Pass():Reject():Reject()}
 
   return (
     <React.Fragment>
@@ -58,9 +70,14 @@ export const SignUpScreen = (props: SignUpScreenProps): LayoutElement => {
           onBackPress={props.navigation.goBack}
         />
       </ImageBackground>
- 
+
+
       <Layout style={styles.formContainer}>
-        <Layout style={{minWidth:600,}}>
+      <Text category="h2">
+                            {props.route.params.name}
+       </Text>
+       <Divider/>
+        <Layout style={{minWidth:600,marginTop:20}}>
               <Select
                 data={data}
                 size='large'
@@ -72,18 +89,22 @@ export const SignUpScreen = (props: SignUpScreenProps): LayoutElement => {
               />
               <Input
                     placeholder='Password'
-                    status={value.length>0 ? value===key? 'success':'primary'  : 'danger'}
+                    status={value.length>0 ? value===key? 'success':'danger'  : 'danger'}
                     caption={value.length>0 ? value===key? 'RIGHT PASSWORD':'Wrong Password' : 'Can not be empty'}
                     value={value}
+                    size="large"
                     onChangeText={setValue}
                     secureTextEntry={secureTextEntry}
                     icon={secureTextEntry ? EyeOffIcon : EyeIcon}
                     onIconPress={onIconPress}
+                    style={{marginTop:20}}
             />
+            <Divider style={{marginTop:30}}/>
               <Button
                 style={styles.submitButton}
-                onPress={()=>value!==key?alert("THAT PASSWORD IS INCORRECT, TRY AGAIN OR LEAVE THIS PAGE CLICKING ON THE GO_BACK ARROW ( ⬅️ )"):props.navigation.navigate(AppRoute.TODO_DONE,{send:true})}>
-                CLOSE THAT ORDER
+                size="giant"
+                onPress={onPress}>
+                Certificate
               </Button>
       </Layout>
       </Layout>
@@ -119,6 +140,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginVertical: 24,
+    maxWidth:220,
+    alignSelf:"center"
   },
   haveAccountButton: {
     alignSelf: 'center',
@@ -143,47 +166,6 @@ const password = [
 
 
 
-
-const CardWithHeader = (props) => {
-  const Header = () => (
-    <CardHeader
-      title={props.item.number}
-    />
-  );
-  const [activeChecked, setActiveChecked] = React.useState(props.item.scheduledmaint===1);
-
-
-  const onActiveChange = (isChecked) => {
-    setActiveChecked(isChecked);
-  };
-
-
-  return (
-    <Card header={Header} status='success' style={{width:750,marginTop:-150}} >
-      <Text category="h3" > EQUIPMENT : {props.item.cod}</Text>
-      <Divider style={{marginBottom:10, marginTop:10}}/>
-      <Text category="h6"> DATE : {props.item.date.date.slice(0,10)}</Text>
-      <Divider style={{marginBottom:10, marginTop:10}}/>
-      <Text category="h6"> Diagnosis : {props.item.diagnosis}</Text>
-      <Divider style={{marginBottom:10, marginTop:10}}/>
-      <Text category="h6"> Explanation : {props.item.explanation}</Text>
-      <Divider style={{marginBottom:10, marginTop:10}}/>
-      <Layout style={{flexDirection: 'row'}}>
-      <CheckBox
-        style={styles.checkbox}
-        text='Maintenance'
-        checked={activeChecked}
-        onChange={onActiveChange}
-      />
-
-      {props.item.scheduledmaint===0?  
-    
-      <Text category="c3" status="danger" style={{marginTop:10}}> ( This Service Order have not been placed as Maintenance. )</Text>
-      :null}
-      </Layout>
-    </Card>
-  );
-}
 
 
 

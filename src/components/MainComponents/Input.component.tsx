@@ -1,6 +1,10 @@
 import React,{useEffect} from 'react';
 import { Input } from '@ui-kitten/components';
 
+
+
+
+
 /*****PROPS*********
  * 
  *     placeholder = string
@@ -10,28 +14,28 @@ import { Input } from '@ui-kitten/components';
  *
  ********************/
 
-
+const isNumber=/([0-9]|['.'])$/g
 
 export const InputComponent = (props) => {
 
-  const [value, setValue] = React.useState('');
-  const isNotEmpty = value && value.length > 0;
 
   const setThisValue=(val)=>{
-    setValue(val);
-    props.setThisValue(val)
+
+      val.length>0?
+                      props.justNumber===true ? 
+                                                  isNumber.test(val) ?  props.setThisValue(val)  : null  
+                                                  :props.setThisValue(val)
+                      :props.setThisValue(val)
+   
   }
 
-  useEffect(()=>{
-    setValue(props.initialValue)
-  },[])
 
   return (
     <Input
       placeholder={props.placeholder}
-      status={isNotEmpty ? 'success' : 'danger'}
-      caption={isNotEmpty ? '' : props.caption}
-      value={value}
+      status={props.value && props.value.length > 0 ? 'success' : 'danger'}
+      caption={props.value && props.value.length > 0 ? '' : props.caption}
+      value={props.value}
       label={props.label}
       style={{padding:8,paddingVertical:12}}
       textStyle={props.textStyle}

@@ -1,12 +1,11 @@
 import * as actionTypes from '../actions'; 
-import {varModel} from "../../globalFunc_Use/constructionModel"
 const initialState = {
    
         diagnosis_List:[],
         truckid_Diagnosis:null,
         notes:"",
         pictures_Diagnosis:[],
-        ExtraInfo_Diagnosis:varModel({IdMaintenance:null,mtto_mill:"",scheduledmaint:0,ErrorInOdometer:0,explanation:""})
+        ExtraInfo_Diagnosis:[]
 }
 const reducer = (state = initialState, action) => {
 

@@ -23,7 +23,7 @@ const ProgressBarComponent = ({ progress, text, ...props }: ProgressBarProps): R
         style={[props.themedStyle.progressContainer, props.style,]}>
         <View style={[progress>80?props.themedStyle.progress_Danger:
                       progress>66?props.themedStyle.progress_Warning:
-                                  props.themedStyle.progress, { width: `${progress}%`}]}/>
+                                  props.themedStyle.progress, { width: `${progress}%`,alignSelf:"flex-start"}]}/>
       </View>
       {text && <Text style={props.themedStyle.text} status={progress>80?"danger":
                                                             progress>66?"warning":

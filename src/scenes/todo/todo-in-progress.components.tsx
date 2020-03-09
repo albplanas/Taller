@@ -17,16 +17,6 @@ import {Listing} from "../../components/Listing/Listing"
 
 
 
-
-
-
-
-
-
-
-
-
-
 const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & ThemedComponentProps): ListElement => {
 
  // const [selectedIndex, setSelectedIndex] = React.useState(0);

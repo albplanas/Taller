@@ -7,8 +7,6 @@ import {
   Button,
   CardHeader,
 } from '@ui-kitten/components';
-import {PlusIcon } from '../../assets/icons';
-
 import {ListChanges} from "./List";
 
 /***
@@ -43,11 +41,7 @@ const HeaderCard=(props)=>{
                       
                         {props.description===undefined?null:<Text category="c1" status="warning">{"( "+props.description+" )"}</Text>} 
 
-                        <Button  
-                                status={"success"} 
-                                size="large" 
-                                style={{marginLeft: 'auto',marginRight:10,width:80,height:60}} 
-                                onPress={props.actionHeaderLeft}>Save</Button>
+
                   </CardHeader>
           }
 
