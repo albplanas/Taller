@@ -8,7 +8,7 @@ import {StyleSheet ,Image} from "react-native";
 import { ProgressBar } from '../progress-bar.component';
 import {GetSpecificPictures} from "../../SQL/equipment.sql"
 import Logo from "../../assets/notavailable.png";
-import {SelectSMS} from "../../globalFunc_Use/helperFunctions"
+import {SelectSMS} from "../../globalFunc_Use/messenger"
 
 
 export const CardCustomHeaderShowcase=(props)=>{

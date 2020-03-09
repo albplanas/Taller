@@ -9,7 +9,7 @@ import {
 
 import {Img_Src} from "../../assets/iconArrays.js"
 import { AppRoute } from '../../navigation/app-routes';
-import {GetDataFeatures} from "../../globalFunc_Use/constructionModel"
+import {GetDataFeatures} from "../../globalFunc_Use/dataBuilder"
 
 
 

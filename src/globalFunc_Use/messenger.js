@@ -1,3 +1,5 @@
+import { ToastAndroid  } from 'react-native';
+
 function SelectSMS(data){
     if(data.mtto_mill+""==='null' || parseFloat(data.mtto_mill)<1){
       return {
@@ -24,7 +26,17 @@ function SelectSMS(data){
     }
   }
   }
+  const Toast_SMS=(sms)=>ToastAndroid.showWithGravityAndOffset(
+    sms,
+    ToastAndroid.LONG,
+    ToastAndroid.CENTER,
+    25,
+    50,
+  );
+
+  
 
   export {
-    SelectSMS
+    SelectSMS,
+    Toast_SMS
   }

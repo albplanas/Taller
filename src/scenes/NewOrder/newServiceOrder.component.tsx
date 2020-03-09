@@ -1,20 +1,17 @@
 import React ,{useEffect} from 'react';
-import { StyleSheet,Alert,ToastAndroid  } from 'react-native';
+import { StyleSheet,Alert } from 'react-native';
 import {
   Layout,
   Text,
-  Button
 } from '@ui-kitten/components';
-
-import { Upload_Icon,Close_Icon} from '../../assets/icons';
 
 import {ReviewChanges} from "./ReviewChanges"
 import {storeData} from "../../globalFunc_Use/globalJSFunctions" 
 import {Create_NewOrder,Create_NewOrder_Number,Get_LastRecord} from "../../SQL/SendSOData/Create_SO"
 
-
-
-
+import {Toast} from "../../globalFunc_Use/messenger"
+import {Build_Text} from "../../globalFunc_Use/dataBuilder"
+import {TopNavigationComponent} from "./TopNavigator.component"
 
 
 
@@ -134,38 +131,6 @@ const Send_Data=()=>{
 
 
 
-
-
-
-const TopNavigationComponent = (props) => (
-  <Layout level="4" style={{minHeight:122,justifyContent: 'center',padding:10}}>
-    <Layout style={{ justifyContent: 'center',alignItems: 'center',marginBottom:5}} 
-            level="4"
-            >
-      <Text category="h6">NEW SERVICE ORDER </Text>
-      <Text category="h1">EQUIPMENT :   {props.route.params.item.cod} </Text>
-    </Layout>
-    <Layout style={{ flexDirection: 'row',justifyContent: 'center',}} level="4">
-       
-        <Button style={{margin:8,minWidth:200}} 
-                size='giant' 
-                icon ={ Close_Icon}
-                status="danger"
-                onPress={()=>{props.navigation.goBack()}}
-                >Continue Later</Button>
-        <Button style={{margin:8,minWidth:200}} 
-                status="success" 
-                size='giant' 
-                icon ={Upload_Icon}
-                onPress={()=>props.Send_Data()}>
-                  Open New Order 
-        </Button>
-    </Layout>
-  </Layout>
-);
- 
-
-
   
 const styles = StyleSheet.create({
   container: {
@@ -176,13 +141,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Toast=(sms)=>ToastAndroid.showWithGravityAndOffset(
-                                                            sms,
-                                                            ToastAndroid.LONG,
-                                                            ToastAndroid.BOTTOM,
-                                                            25,
-                                                            50,
-                                                          );
+
 
 async function SqlManipulation(diag,info) {
 
@@ -211,21 +170,6 @@ async function SqlManipulation(diag,info) {
     }
 
 
-    function Build_Text(dialg,catg){
-
-            var sortDiag=dialg.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1);
-
-            var topText="*****  "+catg.toUpperCase()+"  *****\n"
-
-            var lowText=sortDiag.map(f=>{
-                                              return f.name+" / "+f.date+"\n"+
-                                                          f.equipmentCod+" / "+ f.Description+"\n"+
-                                                          f[catg]+"\n\n"+
-                                                          "--------------------------"
-                                                          
-                                        }).join("\n")
-              return topText+"\n"+lowText
-          }
 
 
 

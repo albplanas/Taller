@@ -33,33 +33,6 @@ const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & Themed
     setalredyOpend(props.Opened_S_O.map(e=>e.cod) )                  
   }, []);
 
-
-      const decideAboutNewOrder=(item)=>{
-
-        Alert.alert(  'BE AWARE ABOUT',
-                        'There is a new services order open but it is not completed already, if you push CONTINUE all information regard to this existing order will be lost , including the diagnosis and extra information like pictures  !!!',
-                      [  {
-                              text: 'Cancel',
-                              onPress: () => console.log('Cancel Pressed'),
-                              style: 'cancel',
-                            },  {
-                              text: 'Continue', onPress: () => {
-          
-                            storeData('truckid_Diagnosis',item.IDCatEquip+"");
-
-                            ToastAndroid.showWithGravity(
-                                  'Loading ...',
-                                  ToastAndroid.LONG,
-                                  ToastAndroid.CENTER,
-                                );
-                    props.navigation!==undefined?props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item}):null
-
-          }},
-          ],
-          {cancelable: false},
-        );
-}
-
         const selectTruck =(item)=>{
 
                 storeData('truckid_Diagnosis',item.IDCatEquip+"");
@@ -70,7 +43,7 @@ const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & Themed
 
         }
 
-        const onPress_New_SO=(item)=>props.truckid_Diagnosis===null || props.truckid_Diagnosis+""===item.IDCatEquip+""? selectTruck(item): decideAboutNewOrder(item)
+        const onPress_New_SO=(item)=>selectTruck(item)
         const onPress_Profile =(item) => props.navigation!==undefined?props.navigation.navigate(AppRoute.PROFILE,{cod:item.cod}):null
         const onPress_Edit_SO = (item)=> props.navigation!==undefined? props.navigation.navigate(AppRoute.EDIT_SERVICE_ORDER,{item:props.Opened_S_O.filter(e=>e.cod===item.cod)[0]}):null
         const ShowArrFunc=(item)=>{

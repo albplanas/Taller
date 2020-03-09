@@ -19,7 +19,7 @@ import {CardLayout as CarProfileRecent} from '../../components/RecentProfile/Car
 import {storeData} from "../../globalFunc_Use/globalJSFunctions"
 
 
-import {SelectSMS} from "../../globalFunc_Use/helperFunctions"
+import {SelectSMS} from "../../globalFunc_Use/messenger"
 
 
 

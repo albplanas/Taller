@@ -79,35 +79,6 @@ const  dataPicturesConstruction =(id,SO_Picture_OffLine,PictureArrayOriginal)=>{
 }   
 
 
-const varModel=(item)=>{
-
-    return {
-     id :item.IdMaintenance,
-     arr:[{
-            title: 'Is it a MAINTENANCE ?',
-            description:"description",
-            value:item.scheduledmaint===1?true:false,
-            inputType:"checkbox"
-          },
-          {
-            title: 'Is the odomether broken ?',
-            description:"description",
-            value:item.ErrorInOdometer===1?true:false,
-            inputType:"checkbox"
-          },{
-            title: 'Notes',
-            description:"description",
-            value:item.explanation,
-            inputType:"textArea"
-        },
-        {
-          title: 'Millage',
-          description:"Currrent Mileage in the Equipment",
-          value:item.mtto_mill,
-          inputType:"inputArea"
-        },]
-          } 
-  }
 
 
   function GetDataFeatures(pack,itemEquip,enableList,idmechanic,IdMaintenance){
@@ -141,13 +112,28 @@ const varModel=(item)=>{
           })
   }
 
+  function Build_Text(dialg,catg){
+
+    var sortDiag=dialg.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1);
+
+    var topText="*****  "+catg.toUpperCase()+"  *****\n"
+
+    var lowText=sortDiag.map(f=>{
+                                      return f.name+" / "+f.date+"\n"+
+                                                  f.equipmentCod+" / "+ f.Description+"\n"+
+                                                  f[catg]+"\n\n"+
+                                                  "--------------------------"
+                                                  
+                                }).join("\n")
+      return topText+"\n"+lowText
+  }
+
 
 
 export {
     dataDiagnosisConstruction ,
     dataMechanicsConstruction,
     dataPicturesConstruction,
-    varModel,
-
+    Build_Text,
     GetDataFeatures
 }                                

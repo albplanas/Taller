@@ -64,6 +64,8 @@ export   const CloseAllClock=(arr)=>{
     
             return arr.map(e=>CloseClock(e))
         }
+
+        
 export   const AddGlobalClock=(arr,options)=>{
             const millNow = Date.now()
             var newArr=[...arr];
