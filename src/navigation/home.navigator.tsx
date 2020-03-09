@@ -7,6 +7,7 @@ import { HomeTabBar } from '../scenes/home';
 import { LayoutIcon,RefreshIcon, CarIcon ,CogIcon} from '../assets/icons';
 import {SettingNavigator} from "./setting.navigator"
 
+
 const BottomTab = createBottomTabNavigator();
 
 export const HomeNavigator = (): React.ReactElement => (
@@ -19,7 +20,7 @@ export const HomeNavigator = (): React.ReactElement => (
     <BottomTab.Screen
       name={AppRoute.TODO}
       component={TodoNavigator}
-      options={{ title: 'ORDERS', tabBarIcon: LayoutIcon }}
+      options={{ title: 'SERVICE ORDERS', tabBarIcon: LayoutIcon }}
     />
     <BottomTab.Screen
       name={AppRoute.PROFILE}

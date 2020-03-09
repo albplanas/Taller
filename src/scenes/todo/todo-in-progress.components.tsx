@@ -4,16 +4,16 @@ import {
   Layout,
   ThemedComponentProps,
   withStyles,
+  Divider,
 } from '@ui-kitten/components';
 import { TodoInProgressScreenProps } from '../../navigation/todo.navigator';
 import {AppRoute} from "../../navigation/app-routes"
 import {storeData ,RefreshFunct} from "../../globalFunc_Use/globalJSFunctions"
-
+import { Toolbar } from '../../components/toolbar.component';
 import { EditIcon, CarIcon } from '../../assets/icons';
 import {Listing} from "../../components/Listing/Listing"
-
-
-
+import {default as color} from "../../styles/color.json"
+import { StopWatch_IconMenu } from '../../assets/icons';
 
 
 
@@ -51,10 +51,14 @@ const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & Themed
            return  [alreadyOpend.filter(e=>e===item.cod).length>0,alreadyOpend.filter(e=>e===item.cod).length===0,true];
 
         }
-     
-  return (  
-                <Layout style={props.themedStyle.container}>
-
+     console.log("OK")
+  return (  <Layout style={props.themedStyle.container}>
+                                      <Toolbar
+                                                                      title={'Welcome '+props.userName+'  😀😀😀!!!'}
+                                                                      backIcon={()=><StopWatch_IconMenu color={color.teal}/>}
+                                                                      onBackPress={props.navigation.toggleDrawer}
+                                                                    />
+                                                                    <Divider/>
                                           <Layout style={styles.container}>
                                                         
                                                         <Layout style={styles.layerOne} level ="1">

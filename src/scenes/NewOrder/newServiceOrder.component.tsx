@@ -1,16 +1,18 @@
 import React ,{useEffect} from 'react';
-import { StyleSheet,Alert } from 'react-native';
+import { StyleSheet} from 'react-native';
 import {
   Layout,
   Text,
 } from '@ui-kitten/components';
 
 import {ReviewChanges} from "./ReviewChanges"
-import {storeData} from "../../globalFunc_Use/globalJSFunctions" 
-import {Create_NewOrder,Create_NewOrder_Number,Get_LastRecord} from "../../SQL/SendSOData/Create_SO"
 
-import {Toast} from "../../globalFunc_Use/messenger"
-import {Build_Text} from "../../globalFunc_Use/dataBuilder"
+
+
+import {Alert_Decicion}   from "../../globalFunc_Use/messenger"
+import {SqlManipulation}  from "../../globalFunc_Use/sql"
+import {storeData}        from "../../globalFunc_Use/globalJSFunctions" 
+
 import {TopNavigationComponent} from "./TopNavigator.component"
 
 
@@ -66,29 +68,16 @@ useEffect(() => {
 }, [props.diagnosis_List]);
 
 
-const Send_Data=()=>{
+      const Send_Data=()=>{
 
+                      Alert_Decicion(     "Send Data",
+                                          "Do you want to create a new Service Order?",
+                                          ()=>null,
+                                          ()=>{  // SqlManipulation(DiagnosisArray,ExtraArrayOriginal)
+                                              }
+                                        )
 
-
-
-  Alert.alert(
-                "Send Data",
-                "Do you want to create a new Service Order?",
-                [
-                  {
-                    text: 'Cancel',
-                    onPress:()=>null,
-                    style: 'cancel',
-                  },
-                  {text: 'OK', onPress:()=>{
-                      console.log("SqlManipulation")
-                    SqlManipulation(DiagnosisArray,ExtraArrayOriginal);
-                  } },
-                ],
-                {cancelable: false},
-              );
-
-}
+      }
 
 
 
@@ -143,31 +132,7 @@ const styles = StyleSheet.create({
 
 
 
-async function SqlManipulation(diag,info) {
 
-  var d=new Date;
-
-        Toast("Creating a New Service Order ...")
-                  let number = await  Create_NewOrder_Number();                                       //Get Number of the new Services Order
-
-                  const newItem={                                                                      //Configure the new Item  
-                                    number:number
-                                    ,IDCatEquip:diag[0].IDCatEquip
-                                    ,date:d.toISOString().slice(0,10)
-                                    ,mtto_mill:info.Mileage
-                                    ,explanation:Build_Text(diag,"explanation")
-                                    ,status:0
-                                    ,diagnosis : Build_Text(diag,"description")
-                                    ,scheduledmaint:info.IsMaintenance===true?1:0
-                                    ,isOdometerBroken:info.IsOdometerBroken===true?1:0
-                                    }
-
-                 let create = await Create_NewOrder(newItem);                                         //Create the new Item in SQL 
-
-                 console.log(create)
-
-                  return 1;
-    }
 
 
 

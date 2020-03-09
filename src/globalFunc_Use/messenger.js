@@ -1,4 +1,4 @@
-import { ToastAndroid  } from 'react-native';
+import { ToastAndroid ,Alert } from 'react-native';
 
 function SelectSMS(data){
     if(data.mtto_mill+""==='null' || parseFloat(data.mtto_mill)<1){
@@ -26,17 +26,36 @@ function SelectSMS(data){
     }
   }
   }
-  const Toast_SMS=(sms)=>ToastAndroid.showWithGravityAndOffset(
-    sms,
-    ToastAndroid.LONG,
-    ToastAndroid.CENTER,
-    25,
-    50,
-  );
 
-  
+
+
+  const Toast_SMS=(sms)=>ToastAndroid.showWithGravityAndOffset(
+                            sms,
+                            ToastAndroid.LONG,
+                            ToastAndroid.CENTER,
+                            25,
+                            50,
+                          );
+const Alert_Decicion=(title,body,cancelF,acceptF)=>{
+
+  Alert.alert(
+    title,
+    body,
+    [
+      {
+        text: 'Cancel',
+        onPress:cancelF,
+        style: 'cancel',
+      },
+      {text: 'OK', onPress:acceptF },
+    ],
+    {cancelable: false},
+  );
+}
+                          
 
   export {
     SelectSMS,
-    Toast_SMS
+    Toast_SMS,
+    Alert_Decicion
   }

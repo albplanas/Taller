@@ -65,6 +65,7 @@ export const FileSignature_Icon = ()=><FontAwesomeIcon icon={ faFileSignature} s
 export const ArrowLeft_Icon = (props)=><FontAwesomeIcon icon={ faArrowAltCircleLeft} size={props.size} color={props.color} />
 export const ArrowRight_Icon = (props)=><FontAwesomeIcon icon={ faChevronRight} size={props.size} color={props.color} />
 export const StopWatch_Icon = (props)=><FontAwesomeIcon icon={faStopwatch} size={48} color={props.color} />
+export const StopWatch_IconMenu = (props)=><FontAwesomeIcon icon={faStopwatch} size={25} color={props.color} />
 export const UserWatch_Icon = ()=><FontAwesomeIcon icon={faUserClock} size={48} color={"#007bff"} />
 export const User_Watch_Icon = ()=><FontAwesomeIcon icon={faUserClock} size={25} style={{marginLeft:25}} color={"#007bff"} />
 export const Stetoscope_Icon = ()=><FontAwesomeIcon icon={ faStethoscope} size={ 16 } style={{padding:30}} color={"#adb5bd"} />

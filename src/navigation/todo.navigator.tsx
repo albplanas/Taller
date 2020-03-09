@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { AppRoute } from './app-routes';
 import { TodoTabBar, TodoInProgressScreen, TodoDoneScreen } from '../scenes/todo';
@@ -19,4 +19,17 @@ export const TodoNavigator = (): React.ReactElement => (
       options={{ title: 'OPENED ORDERS', tabBarIcon: FolderIcon }}
     />
   </TopTab.Navigator>
+);*/
+
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { AppRoute } from './app-routes';
+import  {TodoInProgressScreen}  from '../scenes/todo/index';
+
+const Stack = createStackNavigator();
+
+export const TodoNavigator = (): React.ReactElement => (
+  <Stack.Navigator headerMode='none'>
+    <Stack.Screen name={AppRoute.TODO_IN_PROGRESS} component={TodoInProgressScreen}/>
+  </Stack.Navigator>
 );
