@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {PureComponent } from 'react';
 import {
   Layout,
   Divider,
@@ -15,7 +15,7 @@ import {GetMaintenceByID} from "../../SQL/maintenance.sql.js"
 
 
 
-export class ServiceOrder extends Component{
+export class ServiceOrder extends PureComponent{
     constructor(props) {
         super(props);
         this.state = {
@@ -53,10 +53,7 @@ export class ServiceOrder extends Component{
         this.setState({
             selectedIndex:value
         })
-        if(value===2){
-            alert("↙️ Select the range in the calendar")
-        }
-        else if(value===0){
+        if(value===0){
           var d=new Date;
           var init=d.getFullYear()+"-01-01";
           var final=d.getFullYear()+"-12-31";
@@ -65,6 +62,14 @@ export class ServiceOrder extends Component{
           GetMaintenceByID(id,init,final,(x)=>this.setState({data:x,spinner:false}))
         }
         else if(value===1){
+          var d=new Date;
+          var init=(d.getFullYear()-1)+"-01-01";
+          var final=(d.getFullYear()-1)+"-12-31";
+          var id=this.state.id;
+          this.setState({spinner:true})
+          GetMaintenceByID(id,init,final,(x)=>this.setState({data:x,spinner:false}))
+        }
+        else if(value===2){
           var init="2010-01-01";
           var final="2100-12-31";
           var id=this.state.id;
@@ -108,7 +113,7 @@ return (
   <Layout level="3" style={styles.layoutList}>
     <Spinner status='warning'size='giant'/>
 
-    <Text >Loading Data ...</Text>
+    <Text style={{marginTop:25}} >Loading Data ...</Text>
   </Layout>
 )
 

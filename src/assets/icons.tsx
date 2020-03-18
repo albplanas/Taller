@@ -21,7 +21,8 @@ import { faTrashAlt,faEllipsisH,faCog, faWrench, faSearchMinus, faPaperPlane, fa
          faStopwatch,
          faUserClock,
          faArrowAltCircleLeft,
-         faChevronRight
+         faChevronRight,
+         faHashtag
          } from '@fortawesome/free-solid-svg-icons'
 
 import { Alert,ToastAndroid } from 'react-native';
@@ -36,6 +37,7 @@ export const ToolsIcon = ()=><FontAwesomeIcon icon={ faWrench } size={ 32 } colo
 export const CalendarAlt_Icon = ()=><FontAwesomeIcon icon={ faCalendarAlt } size={ 32 } color={"#17a2b8"} />
 export const CalendarDate_Icon = ()=><FontAwesomeIcon icon={ faCalendarDay } size={ 32 } color={"#17a2b8"} />
 export const Percent_Icon = ()=><FontAwesomeIcon icon={ faPercent } size={ 32 } color={"#17a2b8"} />
+export const Hash_Icon = ()=><FontAwesomeIcon icon={ faHashtag } size={ 32 } color={"#17a2b8"} />
 export const File_InvoiceIcon = ()=><FontAwesomeIcon icon={ faFileInvoice } size={ 32 } color={"#17a2b8"} />
 export const Tools_Icon = (props)=><FontAwesomeIcon icon={ faWrench } size={ 32 } color={props.color===undefined?"#dc3545":props.color} />//danger
 export const CogsIcon = ()=><FontAwesomeIcon icon={ faCog }  size={ 24 } color={"white"} />
@@ -61,6 +63,7 @@ export const FolderSlash_Icon = (props)=><FontAwesomeIcon icon={ faFolderMinus} 
 export const Images_Icon = (props)=><FontAwesomeIcon icon={ faImages} size={ 32 } color={props.color===null?'#17a2b8':props.color} />
 export const CodeBranch_Icon = (props)=><FontAwesomeIcon icon={ faCodeBranch} size={ 24 } color={props.color===null?'#17a2b8':props.color} />
 export const Save_Icon = ()=><FontAwesomeIcon icon={ faSave} size={ 48 } color={'#28a745'} />
+export const Save_PRO_Icon = (props)=><FontAwesomeIcon icon={ faSave} size={ props.size } color={props.color} />
 export const FileSignature_Icon = ()=><FontAwesomeIcon icon={ faFileSignature} size={ 24 } color={'#28a745'} />
 export const ArrowLeft_Icon = (props)=><FontAwesomeIcon icon={ faArrowAltCircleLeft} size={props.size} color={props.color} />
 export const ArrowRight_Icon = (props)=><FontAwesomeIcon icon={ faChevronRight} size={props.size} color={props.color} />
@@ -72,6 +75,9 @@ export const Stetoscope_Icon = ()=><FontAwesomeIcon icon={ faStethoscope} size={
 
 export const Clock_Icon = (style): IconElement => <Icon {...style}   name='clock-outline' />
 export const Alert_Icon = (style): IconElement => <Icon {...style}   name='alert-circle-outline' />
+
+
+
 export const Briefcase_Icon = (style): IconElement => (
   <Icon {...style} name='briefcase-outline' />
 );
@@ -81,6 +87,7 @@ export const UnLock_Icon = (style): IconElement => (
 export const Lock_Icon = (style): IconElement => (
   <Icon {...style} name='lock-outline' />
 );
+
 export const Add_User_Icon = (style): IconElement => (
   <Icon {...style} name='person-add-outline' />
 );

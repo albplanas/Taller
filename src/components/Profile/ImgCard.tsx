@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import {
   Text,
   Layout,
-  Spinner
+  Spinner,
+  Avatar
 } from '@ui-kitten/components';
 import {StyleSheet ,Image} from "react-native";
 import { ProgressBar } from '../progress-bar.component';
@@ -65,7 +66,7 @@ export const CardCustomHeaderShowcase=(props)=>{
              (props.img.length===0||!props.img)?
              
               <Image style={styles.headerImage} source={Logo }/>:
-              <Image style={styles.headerImage} source={{ uri: props.img }}  />               
+              <Avatar size='giant' style={styles.headerImage} source={{ uri: props.img }}  />               
   
   
   }
@@ -76,8 +77,10 @@ export const CardCustomHeaderShowcase=(props)=>{
 
 
       headerImage: {
-        height: 250,
-        margin:10
+        height: 350,
+        width:400,
+        margin:10,
+        alignSelf:"center"
       },
 
       layout: {

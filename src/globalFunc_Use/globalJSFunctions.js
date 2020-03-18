@@ -47,7 +47,6 @@ const RefreshFunct=(onUpdate_LIST,setRefreshing) => {
               
               
                   var get_Opened_S_O=(val)=>{
-                
                     var String_Value=JSON.stringify(val)
                     onUpdate_LIST("Opened_S_O",val)
                     storeData("Opened_S_O",String_Value)

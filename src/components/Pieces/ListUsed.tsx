@@ -30,8 +30,7 @@ export const ListUsed = (props) => {
     <Layout style={styles.layoutOne} level='2'>
       <Text style={{textAlign:"center",margin:10}} category="label" >LEGEND</Text>
       <ListLegend setCheckedListUsed={setChecked}/>
-      <Button icon={()=><CodeBranch_Icon color={"#4b0082"}/>}status="info" style={{marginVertical:8,marginLeft:10,marginBottom:150}} size="large" onPress={()=>{props.setSelectedIndex(1)}}>Pieces Tree</Button>
-    </Layout>
+      </Layout>
 
     <Layout style={styles.layoutTwo} level='2'>
       <Text category="h3" style={{textAlign:"center"}}>ITEMS USED BEFORE</Text>
@@ -90,6 +89,7 @@ const ListLegend = (props) => {
 
   const renderItem = ({ item, index }) => 
     <ListItem
+    key={"legend"+index}
       title={item.title}
       icon={iconsArr[index]}
       accessory={renderAccessory}
@@ -137,7 +137,9 @@ const ListLegend = (props) => {
 const ListItems = (props) => {
     const renderItem = ({ item, index }) => (
         <ListItem
+        key={"beforeUsed_"+item.cod+"_"+index}
           title={item.cod}
+          titleStyle={{fontSize:20}}
           description={item.descrip}
           icon={item.Category==="FILTER"?iconsArr[0]:item.Category==="Tires"?iconsArr[2]:item.Category==="Battery"?iconsArr[2]:iconsArr[3]}
         />

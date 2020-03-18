@@ -20,6 +20,12 @@ import {TopNavigationResources} from "./TopNavigator.component";
 
 import { default as customColor } from '../../../styles/color.json';
 import { AppRoute } from '../../../navigation/app-routes';
+import {EditDescription_Labor_SO} from "../../../SQL/SendSOData/Labor_Service_Order" 
+
+
+
+
+
 
 
 
@@ -38,6 +44,7 @@ export const ListOfResources = (props) => {
 
 
  useEffect(() => {
+ 
       var newItem=props.enablelist[props.itemselect]===undefined?null:props.enablelist[props.itemselect]
         setItem(newItem);   
         //EditFeatures
@@ -47,41 +54,57 @@ export const ListOfResources = (props) => {
         setEdit(false)
         seteditNOavailable(newItem===null?true:newItem.mechanic===props.userName?false:true);
        
-    }, [props.itemselect]);
+    }, [props.itemselect,props.enablelist]);
 
 
 
+const UploadEditElem=()=>{
+    if(item.orderclosed!==undefined){
+      EditDescription_Labor_SO(item.idSelect,description,explanation,()=>props.EditDataBase(item.idSelect,description,explanation))
+    }
+    else{
+            const newEditedItem = {
+              ... item,
+              description:description,
+              explanation:explanation
+            }
+          
+            props.UploadEdit(newEditedItem)
+            setItem(newEditedItem)
+          }
+    }
 
 const onPressCamera=()=>{
 
                       props.navigation.navigate(AppRoute.CAMERA, {
                                                 from : 'diagnosis',
-                                                idSelect:props.enablelist.map(e=>e.idSelect)[props.itemselect],
-                                                IdMaintenance:item==null?null:item.IdMaintenance
+                                                item:item==null?null:item
                                                   })
   }
 
 
   return (
     <Layout style={{height:'100%',flex:1,width:"100%"}} >
-
       <TopNavigationResources subtitle={item==null?"":item.mechanic+" / "+ item.date}
                               idSelect={item==null?null:item.idSelect}
                               IdMaintenance={item==null?null:item.IdMaintenance}
                               onPressCamera={onPressCamera}
+                              onSaveEdit={UploadEditElem}
                               navigation={props.navigation}
                               edit={edit}
                               setEdit={setEdit}
                               onDelete={props.onDelete}
                               editNOavailable={editNOavailable}
                               UPDATE_Clock_LIST={props.UPDATE_Clock_LIST}
+
                               Clock_List={props.Clock_List}
                               FeaturesList={props.FeaturesList}
                               item={item}
                               type={props.type}
 
       />
-      {
+
+{
           edit===false?
                             < ModeEdit_Off  description={item===null?"":item.description}
                                             explanation={item===null?"":item.explanation}
@@ -115,7 +138,9 @@ const onPressCamera=()=>{
                                                       alignSelf:"center",marginBottom:200}} 
                                               size="giant" 
                                               onPress={onPressCamera}
-                                              >Add Picture</Button>:null}                                              
+                                              >Add Picture</Button>:null} 
+
+                                             
         
     </Layout>
   );
@@ -126,7 +151,10 @@ const onPressCamera=()=>{
 
 
 
+/*
 
+
+*/
 
 
 

@@ -8,46 +8,30 @@ import {TextArea} from "../../../components/MainComponents/TextArea"
 
 export const ModeEdit_On = (props) => {
 
-  const setDescrip= (val)=>props.setdescription(val)
-  const setExpla  = (val)=>props.setExplanation(val)
   return (
-  <Layout level='4' style={{marginTop:20}}>
-          <TextArea text={props.description} 
-                    setText={setDescrip}
-                    placeholder="Describe the issue"
-                    validation={props.description.length>0?true:false}
-                    width={732} 
-                    caption={"This field is required"}
-                    label="Description"
-                    level={"3"}                                         
-                                    />
-          <TextArea text={props.explanation} 
-                    setText={setExpla}
-                    placeholder="Describe the issue"
-                    validation={props.explanation.length>0?true:false}
-                    width={732} 
-                    caption={"This field is required"}
-                    label="Description"
-                    level={"3"}                                         
-                                    />
-                      
-           <Pieces data={[
-                                  { text: 'Option 1' },
-                                  { text: 'Option 2' },
-                                  { text: 'Option 3' },
-                                  { text: 'Option 1' },
-                                  { text: 'Option 2' },
-                                  { text: 'Option 3' },
-                                  { text: 'Option 1' },
-                                  { text: 'Option 2' },
-                                  { text: 'Option 3' },
-                                ]}
-                   selectedOption={props.pieces}
-                   setSelectedOption={props.setPieces}
-                      />
- 
-                  
-      </Layout>
+            <Layout level='4' style={{marginTop:20}}>
+                    <TextArea text={props.description} 
+                              setText={props.setdescription}
+                              placeholder="Describe the issue"
+                              validation={props.description.length>0?true:false}
+                              width={732} 
+                              caption={"This field is required"}
+                              label="Description"
+                              level={"3"}                                         
+                                              />
+                    <TextArea text={props.explanation} 
+                              setText={props.setExplanation}
+                              placeholder="Describe the issue"
+                              validation={props.explanation.length>0?true:false}
+                              width={732} 
+                              caption={"This field is required"}
+                              label="Explanation"
+                              level={"3"}                                         
+                                              />
+
+                                              
+                            
+                </Layout>
 
   );
 };

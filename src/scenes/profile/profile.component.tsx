@@ -1,13 +1,8 @@
-import React from 'react';
-import { StyleSheet,ScrollView,RefreshControl } from 'react-native';
+import React ,{useEffect}from 'react';
+import { StyleSheet} from 'react-native';
 import {
   Divider,
   Layout,
-  Button,
-  Text,
-  Input,
-  ListItem,
-  List
 } from '@ui-kitten/components';
 import { ProfileScreenProps } from '../../navigation/profile.navigator';
 import {
@@ -15,9 +10,12 @@ import {
   SafeAreaLayoutElement,
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
-import { CarIcon, SearchIcon } from '../../assets/icons';
 import {CARD_TRUCK_Profil} from "../../components/Profile/Equiment_Profile.component"
 
+import {TopBar} from "./topBar"
+import {VerticalLayout} from "./equipment.list"
+
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -27,13 +25,31 @@ export const ProfileScreen = (props: ProfileScreenProps): SafeAreaLayoutElement 
   const [text, setText] = React.useState("");
   const [select, setSelect] = React.useState(null);
   const onRefresh = React.useCallback(() => {}, [refreshing]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+     
+      return () => {
+        props.route.params===undefined
+        ?setSelect(null):
+        setSelect(props.route.params.cod)
+      };
+    }, [])
+  );
+
+
   
   return (
 
     <SafeAreaLayout
       style={styles.safeArea}
       insets={SaveAreaInset.TOP}>
-      <Header text={text} setText={setText} select={select} />
+      <TopBar text={text} 
+              select={select} 
+              navigation={props.navigation} 
+              item={props.FeaturesTruck.filter(x=>x.cod===select)} 
+              setSelect={setSelect}/>
       <Divider/>
 
      {  (select===null)?
@@ -60,26 +76,16 @@ export const ProfileScreen = (props: ProfileScreenProps): SafeAreaLayoutElement 
 /****************   COMPONENT  *****************/
 const HorizontalLayout=(props)=>{
   return   <Layout style={styles.containerDist}>
-
-                  <Layout style={styles.layoutDist} >
-                         <CARD_TRUCK_Profil  {...props} />
-                  </Layout>
-                  <Layout style={styles.layoutDist} > 
-                         <VerticalLayout {...props}/>
-                  </Layout>
+                  <VerticalLayout {...props}/>
+                  <CARD_TRUCK_Profil  {...props} />
+                  
+                  
+                  
+    
             </Layout> 
 }
 
-const VerticalLayout=(props)=>{
-  return <Layout style={styles.containerDist}>
-                  <ScrollView refreshControl={ <RefreshControl refreshing={props.refreshing} onRefresh={props.onRefresh} />}
-                                    style={props.select===null?null:{marginBottom:20}}              
-                        >
-                        <Listed {...props} text={props.text} setSelect={props.setSelect}/>
-            
-                  </ScrollView>
-  </Layout>
-}
+
 
 const styles = StyleSheet.create({
   containerDist: {
@@ -131,72 +137,8 @@ const styles = StyleSheet.create({
 
 });
 
-const Header=(props)=>{
-  
-      return  <Layout style={styles.containerM}>
-
-            <Layout style={styles.layout} >
-              <Text category={"h5"}>{ props.select===null?"  EQUIPMENT PROFILE 🚚":props.select+"  EQUIPMENT PROFILE 🚚"}</Text>
-            </Layout>
-            <Layout style={styles.layout} level='4'>
-            <Input
-                    placeholder='SEARCH BY TRUCK ...'
-                    value={props.text}
-                    onChangeText={props.setText}
-                    icon={SearchIcon}
-                  />
-            </Layout>
-        </Layout>
-}
-const Listed =(props)=>{
-
-    var arr=props.text.length===0?props.FeaturesTruck:props.FeaturesTruck.filter(x=>x.cod.indexOf(props.text)!==-1).sort((a,b)=>{return a.cod>b.cod?1:-1})
-    var newArr=arr.slice(0,10);
-  return  <Layout style={styles.containerL}>
-
-              <Layout style={styles.layout1} level='2'>
-                    { arr.length===0?<NoFound/>: <ListCompositeItemShowcase  data={newArr} setSelect={props.setSelect} /> }    
-              </Layout>
-                  
-                    
-      </Layout>
-  }
 
 
-const NoFound=()=>{
-  return <Layout >
-        <Text style={styles.text} status="warning"category='h1'>SEARCH NO FOUND ... </Text>
-  
-      </Layout>
-  }
-
-
-
-  const ListCompositeItemShowcase = (props) => {
-  
-   const renderItem = ({ item, index }) => {
-      const renderItemAccessory = (style) => (
-        <Button style={style}
-                onPress={()=>props.setSelect(item.cod)}>SELECT</Button>
-      );
-      return (
-        <ListItem
-          title={`${item.cod} `}
-          description={`${item.descrip} / ${item.Brand} / ${item.year} `}
-          icon={CarIcon}
-          accessory={renderItemAccessory}
-        />
-      );
-    }
-  
-    return (
-      
-      <List
-        data={props.data}
-        renderItem={renderItem}
-      />
-    );
-  };
   
   
 

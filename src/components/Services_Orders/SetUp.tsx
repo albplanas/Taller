@@ -46,7 +46,7 @@ const RangeCalendarSimpleUsageShowcase = (props) => {
     
   
     return (
-      <Layout level="4" style={{marginLeft:20}}>
+      <Layout level="4" style={{marginLeft:20,width:250}}>
   
         <Text style={styles.text} category='h6'>
           {"Select Date Range"}
@@ -56,10 +56,9 @@ const RangeCalendarSimpleUsageShowcase = (props) => {
           selectedIndex={props.selectedIndex}
           onChange={props.setSelectedIndex}>
           <Radio style={styles.radio} text='This Year'/>
-          <Radio style={styles.radio} text='All of Them'/>
+          <Radio style={styles.radio} text='Last Year'/>
+          <Radio style={styles.radio} text='All of Orders'/>
          
-          <Radio style={styles.radio} text='Custom Range'/>
-          <RangeCalendarSimpleUsageShowcase  setRangeP={(x)=>props.setRangeP(x)}/>
           
         </RadioGroup>
   

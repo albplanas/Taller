@@ -23,6 +23,7 @@ import {storeData} from "../../globalFunc_Use/globalJSFunctions"
 
 
 
+
 const CameraIcon = (style) => (
   <Icon {...style} name='camera' width={96} height={96}/>
 );
@@ -52,8 +53,10 @@ class CameraNavigator extends PureComponent {
             var newArr=this.props.pictures_Diagnosis.concat({
               //illustration:data.base64,
               uri:data.uri,
-              idSelect:this.props.route.params.idSelect,
-              IdMaintenance:this.props.route.params.IdMaintenance,
+              idSelect:this.props.route.params.item.idSelect,
+              IdMaintenance:this.props.route.params.item.IdMaintenance,
+              idEmployee:this.props.route.params.item.idmechanic,
+              feature:this.props.route.params.item.feature,
               PictureID:parseFloat((Math.random()*1000000)+"").toFixed(0),
               date:(new Date).toISOString().slice(0,10)
             })
@@ -71,12 +74,10 @@ class CameraNavigator extends PureComponent {
 
 
   render() {
+
     const Back=() => this.props.navigation.goBack();
 
-    const onPress=this.props.route.params.from==="diagnosis"?this.takePicture.bind(this):
-                  this.props.route.params.from==='profile'?this.takePictureProfile.bind(this):
-                  this.props.route.params.from==='edit_SO'?this.takePictureSO.bind(this):
-                                                           ()=>{}
+    const onPress=this.props.route.params.from==="diagnosis"?this.takePicture.bind(this):()=>{}
     
     const SpinnerButton=this.state.spinner===true?<Layout style={{borderRadius:50,width:320,flexDirection:"row" ,padding:30}}>   
                                                   <Layout><Spinner style={{alignSelf:"center"}}size="giant"/></Layout>
@@ -119,65 +120,6 @@ class CameraNavigator extends PureComponent {
       </View>
     );
   }
-
-
- takePictureSO = async() => {
-    
-    var storeData = async (newArr) => {
-      try {
-        await AsyncStorage.setItem("SO_Picture_OffLine",newArr)
-      } catch (e) {
-        alert("Something was wrong: "+e)
-      }
-    }
-    
-    if (this.camera) {
-      const options = { quality: 1.0, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      var newArr=this.props.SO_Picture_OffLine.concat({
-        //Photo:data.base64,
-        IdMaintenance:this.props.route.params.cod,
-        uri:data.uri,
-        PictureID:parseFloat((Math.random()*1000000)+"").toFixed(0),
-        date:(new Date).toISOString().slice(0,10)
-      })
-      
-      this.props.onUpdate_EDIT_SO("SO_Picture_OffLine",newArr)
-      
-      storeData(JSON.stringify(newArr));
-
-      this.props.navigation.goBack();
-   
-    }
-  };
-  takePictureProfile = async() => {
-    
-    var storeData = async (newArr) => {
-      try {
-        await AsyncStorage.setItem("pictures_Profile",newArr)
-      } catch (e) {
-        alert("Something was wrong: "+e)
-      }
-    }
-    
-    if (this.camera) {
-      const options = { quality: 0.5, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      /*var newArr=this.props.pictures_Profile.filter(x=>x.cod!==this.props.route.params.cod).concat({
-        illustration:data.base64,
-        cod:this.props.route.params.cod
-      })*/
-      //this.props.onUpdate_Settings("pictures_Profile",newArr)
-      
-      //storeData(JSON.stringify(newArr));
-
-      this.props.navigation.goBack();
-     // console.log(newArr.length);
-    }
-  };
-
-
-
 
 }
 

@@ -7,17 +7,17 @@ import { StyleSheet } from 'react-native';
 import {TopNavigationCase} from "./TopNavigator_Board"
 import {Listing} from "./Listing"
 
-import whyDidYouRender from "@welldone-software/why-did-you-render";
+//import whyDidYouRender from "@welldone-software/why-did-you-render";
 import {Display} from "./Alternatives"
 
 
 
 
 
-  whyDidYouRender(React);
+  //whyDidYouRender(React);
 
   export class Features_Board extends React.PureComponent {
-    static whyDidYouRender = true
+   // static whyDidYouRender = true
     render(){
       return (
         <Features_Board_Sample{...this.props}/>

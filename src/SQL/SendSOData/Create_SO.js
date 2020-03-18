@@ -4,6 +4,7 @@ import axios from 'axios';
 import {newNumber} from "../../globalFunc_Use/sql.js"
 
 
+
 /*
       [IdMaintenance]  
       ,[number]
@@ -19,11 +20,6 @@ import {newNumber} from "../../globalFunc_Use/sql.js"
                             ,[scheduledmaint]
 */
 
-getUsers = async () => {
-    let res = await axios.get("https://reqres.in/api/users?page=1");
-    let { data } = res.data;
-    this.setState({ users: data });
-};
 
 export const Create_NewOrder_Number=async ()=>{
    
@@ -51,9 +47,9 @@ export const Create_NewOrder_Number=async ()=>{
 
 export const Create_NewOrder= async (newItem)=>{
    
-    let result = await axios.post('http://jva-sql:8080/Assistance/Diagnostic/php-sql/SO_Create_New.php',JSON.stringify({mode:"new_SO",item:newItem}))
+   return  await axios.post('http://jva-sql:8080/Assistance/Diagnostic/php-sql/SO_Create_New.php',JSON.stringify({mode:"new_SO",item:newItem}))
                         .then((response)=> {
-
+                     
                             return Get_LastRecord(newItem.number)
                             
                         })
@@ -61,14 +57,14 @@ export const Create_NewOrder= async (newItem)=>{
                                 alert("something was wrong" +error);
                                 return null
                         })  
-    return  result
+   
 }
 
 export const Get_LastRecord=async (number)=>{
    
     let result = await axios.post('http://jva-sql:8080/Assistance/Diagnostic/php-sql/SO_Details.php',JSON.stringify({mode:"get_Record_by_SO_Number",number:number}))
                             .then((response)=> {
-                                
+                           
                                 return Array.isArray(response.data)?response.data:null
                                 
                             })

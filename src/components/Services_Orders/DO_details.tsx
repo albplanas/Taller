@@ -13,7 +13,7 @@ import {
 import {StyleSheet, Alert} from "react-native"
 import {GetPiecesByMaintence} from "../../SQL/maintenance.sql.js"
 import {CodeBranch_Icon} from "../../assets/icons"
-
+import {default as color} from "../../styles/color.json"
 
   
   export const ListCompositeItemShowcase = (props) => {
@@ -68,7 +68,17 @@ import {CodeBranch_Icon} from "../../assets/icons"
       card: {
         marginVertical: 8,
       },
-      text:{}
+      text:{},
+      badge: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        // height: 24,
+       //  width: 48,
+           paddingHorizontal: 12,
+           paddingVertical:6,
+         borderRadius: 12,
+         backgroundColor: color.purple,
+       },
   });
 
 
@@ -111,13 +121,22 @@ import {CodeBranch_Icon} from "../../assets/icons"
 
 const ListPieces = (props) => {
 
-  const renderItem = ({ item, index }) => (
-    <ListItem
-      title={`${item.cod}  ( ${item.qty}  )`}
-      description={`${item.descrip}`}
-      icon={()=><CodeBranch_Icon color="#4b0082"/>}
+  const renderItem = ({ item, index }) => {
+    const renderItemAccessory = (style) => (
+      <Layout style={[style, styles.badge]}>
+      <Text  style={{fontSize:20,color:"white"}}>{item.qty}</Text>
+    </Layout>
+    );
+    return  <ListItem
+                        key={"item_key_"+index}
+                          title={item.cod} 
+                          description={`${item.descrip}`}
+                          icon={()=><CodeBranch_Icon color="#4b0082"/>}
+                          accessory={renderItemAccessory}
     />
-  );
+  }
+   
+  
 
   return (
 

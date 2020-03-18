@@ -78,6 +78,7 @@ import {
                         return index+""===props.current_ClockIn+""?AddClock(x):x
                     })
               }
+              console.log("active")
               props.UPDATE_Clock_LIST("Clock_List",arr)
        }
      
@@ -86,7 +87,8 @@ import {
 
        const    HeaderComponent = ()=> <Header current_ClockIn={current}/>  
        const    FooterComponent = ()=> <Footer ClockOutButton={ClockOut_IN_Button} 
-                                                initialCheck={isCheck}/>                     
+                                                initialCheck={isCheck}
+                                                navigation={props.navigation}/>                     
                                     
                                     return props.Clock_List.length>0?(
                                                                               <Drawer

@@ -46,6 +46,21 @@ export const MultiCard=(props)=>{
 
             }
 
+          const onUpdate_DIAGNOSIS_Service_Order=(newItems)=>{
+
+              const newArr=props.diagnosis_List_SO.concat(newItems);
+              ToastAndroid.showWithGravityAndOffset(
+                "Uploading Changes ...",
+                ToastAndroid.LONG,
+                ToastAndroid.CENTER,
+                25,
+                50,
+              );
+              props.onUpdate_DIAGNOSIS_SO("diagnosis_List",newArr)
+              storeData("SO_diagnosis_List",JSON.stringify(newArr))
+}
+
+
             const renderItem = ({ arr, index }) => {
 
               const arrList=data[index]!==undefined?data[index]:[];
@@ -55,7 +70,9 @@ export const MultiCard=(props)=>{
                                     <Layout style={styles.cardstyle}>
                                         <CardsRow arrList={arrList} 
                                                   {...props}
-                                                  updateFunction={props.route.params.originalRoute==="diagnosis"?onUpdate_DIAGNOSIS:null}/>    
+                                                  updateFunction={props.route.params.originalRoute==="diagnosis"?
+                                                                                                                  onUpdate_DIAGNOSIS:
+                                                                                                                  onUpdate_DIAGNOSIS_Service_Order}/>    
                                       </Layout>
                                   );
                               }

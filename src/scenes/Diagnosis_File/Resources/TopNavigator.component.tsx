@@ -10,18 +10,22 @@ import React, { useEffect } from 'react';
 import {
   Button,
   Icon,
+  Text,
   Tooltip,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
 import {  Alert  } from 'react-native';
 
-import {TrashIcon,EditIcon,Camera_Icon,FileSignature_Icon,Clock_Icon,User_Watch_Icon, Alert_Icon} from "../../../assets/icons"
+import {TrashIcon,EditIcon,Camera_Icon,FileSignature_Icon,Clock_Icon,User_Watch_Icon, Alert_Icon,Save_PRO_Icon} from "../../../assets/icons"
 import {AppRoute} from "../../../navigation/app-routes"
 import {CloseAllClock,AddGlobalClock} from "../../../globalFunc_Use/clock"
 
 import { batch } from 'react-redux';
 import { DrawerActions } from '@react-navigation/native';
+
+import {default as color } from "../../../styles/color.json"
+
 
 
 
@@ -82,7 +86,9 @@ const onBackdropPress=()=>{
 };
 
 const EditAction = (props) => (
-  <TopNavigationAction {...props}  icon={()=><EditIcon fill={'#28a745'} width={props.edit===true?32:null}  height={props.edit===true?32:null} />}/>
+  <TopNavigationAction {...props}  icon={()=>props.edit===true?
+                                             <Button onPress={props.onPressSave}status="success" style={{width:48,height:48}} appearance={"outline"} icon={()=> <Save_PRO_Icon size={40} color={color.green}/>}></Button>:
+                                              <EditIcon fill={'#28a745'}   />}/>
 );
 
 
@@ -90,7 +96,8 @@ export const TopNavigationResources = (props) => {
 
   const onPressRecords=()=>{props.navigation.navigate(AppRoute.RECORD_CLOCK)}
   const onPressEdit=()=>{
-   props.setEdit(!props.edit)
+
+    props.setEdit(!props.edit)
   }
   const onSign=()=>props.navigation.navigate(AppRoute.SIGNATURE,{name:"Clock In :"+props.subtitle,callback:()=>{
 
@@ -136,7 +143,10 @@ export const TopNavigationResources = (props) => {
       {cancelable: false},
   );
    }
-
+const onPressSave=()=>{
+  props.onSaveEdit();
+  props.setEdit(!props.edit)
+}
   const onPressDelete=()=>{
                                         Alert.alert(
                                             'DELETE REPORT ?',
@@ -161,9 +171,12 @@ export const TopNavigationResources = (props) => {
     <TooltipEdit navigation={props.navigation} icon={()=><Camera_Icon fill="#495057"/>}/>,
     <TooltipEdit navigation={props.navigation} icon={()=><TrashIcon fill="#495057"/>}/>
   ]:
-  [ ()=>props.type==="editOrder"?<StatusAction icon ={()=><Clock_Icon  onPress={onPressClock} style={{marginLeft:25}}  fill="#fd7e14"/>  }/>:null,
-   ()=>props.type==="editOrder"? <RecordAction icon={()=><User_Watch_Icon/>} onPress={onPressRecords}/>:null,
-     <EditAction   style={{marginLeft:25}} onPress={onPressEdit} edit={props.edit}/>,
+  [     props.type==="edit"?
+              <StatusAction icon ={()=><Clock_Icon  onPress={onPressClock} style={{marginLeft:25}}  fill="#fd7e14"/>  }/>
+              :null,
+        props.type==="edit"? <RecordAction icon={()=><User_Watch_Icon/>} onPress={onPressRecords}/>
+        :null,
+     <EditAction   style={{marginLeft:25}} onPress={onPressEdit} onPressSave={onPressSave} edit={props.edit}/>,
     <CameraAction  style={{marginLeft:25}} onPress={props.onPressCamera}/>,
     <DeleteAction  style={{marginLeft:25}} onPress={onPressDelete}/>
   ];

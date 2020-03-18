@@ -39,15 +39,6 @@ export const ModeEdit_Off = (props) => {
                       descriptionStyle={{fontSize:13,marginVertical:8,marginHorizontal:20}}
                       style={{marginVertical:8,maxWidth:600,alignSelf:"center"}}
                       />  
-                      
-            <ListItem title={'Pieces :'}
-                                titleStyle={{fontSize:16}}
-                                description={text[2]}
-                                descriptionStyle={{fontSize:13,marginVertical:8,marginHorizontal:20}}
-                                style={{marginVertical:8,maxWidth:600,alignSelf:"center"}}
-                                /> 
- 
-                  
       </Layout>
 
   );

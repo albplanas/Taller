@@ -11,10 +11,10 @@ import {StyleSheet ,View,Image, Alert} from "react-native";
 
 import {Camera_Icon} from "../../assets/icons"
 import { AppRoute } from '../../navigation/app-routes';
-
+import {default as color} from "../../styles/color.json"
 
 const MenuIcon = (style) => (
-    <Icon {...style} name='more-vertical'/>
+    <Icon {...style} name='options-2-outline' width={32} />
     );
 
   const Pieces_Icon = (style) => (
@@ -43,7 +43,7 @@ export const TopNavigationActionsShowcase = (props) => {
         <Layout level="4" style={{width:600,padding:1,marginLeft:30,borderRadius:5}}>
                   <TopNavigation
                   title={props.title}
-                  titleStyle={styles.headerText}
+                  titleStyle={[styles.headerText,{color:color.orange,fontSize:30,paddingTop:10}]}
                   rightControls={renderRightControls()}
                   />
       </Layout>
@@ -93,7 +93,7 @@ export const TopNavigationActionsShowcase = (props) => {
           selectedIndex={selectedIndex}
           onSelect={onItemSelect}
           onBackdropPress={toggleMenu}>
-          <Button status={"success"}onPress={toggleMenu} style={styles.button} appearance="ghost" icon={MenuIcon}></Button>
+          <Button status={"primary"}onPress={toggleMenu} style={styles.button} size="giant" appearance="ghost" icon={MenuIcon}></Button>
         </OverflowMenu>
       </Layout>
     );

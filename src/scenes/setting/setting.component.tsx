@@ -14,7 +14,8 @@ import {
   
 
 } from '../../components/safe-area-layout.component';
-import { MenuIcon } from '../../assets/icons';
+import {default as color} from "../../styles/color.json"
+import { StopWatch_IconMenu } from '../../assets/icons';
 
 import {SettingScreenComponent} from "./setting.component.layout.js"
 import {RefreshFunct} from "../../globalFunc_Use/globalJSFunctions"
@@ -33,7 +34,7 @@ export const SettingScreen = (props: SettingScreenProps): SafeAreaLayoutElement 
                     >
                         <Toolbar
                                 title='SETTINGS'
-                                backIcon={MenuIcon}
+                                backIcon={()=><StopWatch_IconMenu color={color.teal}/>}
                                 onBackPress={props.navigation.toggleDrawer}
                               />
                               <Divider/>

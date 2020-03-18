@@ -7,8 +7,8 @@ import {
 
   import { Toggle } from '@ui-kitten/components';
   import {StopWatch_Icon} from "../../assets/icons"
-
-
+import {AppRoute} from "../../navigation/app-routes"
+import {Alert_Decicion} from "../../globalFunc_Use/messenger"
   
 
   export const Footer = (props) => {
@@ -29,9 +29,14 @@ import {
                 
                 
                 const onPress=()=>{
-            
-                  props.ClockOutButton(checked);
-                  onCheckedChange(!checked)
+                  props.navigation.navigate(AppRoute.SIGNATURE,{
+                    name:!checked?"Clock In":"Clock Out",
+                    callback:()=>{
+                      Alert_Decicion("Signature accepted","",()=>null,()=>{
+                        props.ClockOutButton(checked);
+                        onCheckedChange(!checked)
+                      })}});
+
 
                 }
                 return     <DrawerHeaderFooter

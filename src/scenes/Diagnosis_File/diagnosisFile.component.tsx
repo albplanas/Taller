@@ -4,8 +4,7 @@ import {
   Layout,
 } from '@ui-kitten/components';
 
-//import {varModel} from "../EditServiceOrder/constructionModel"
-//import {ReviewChanges} from "./Review/ReviewChanges"
+
 import {TopNavigationDiagnosis} from "./TopNavigator.component"
 import {ListOfCommitments} from "./ListOfCommitments.component"
 import {ListOfResources} from  "./Resources/ListOfResources.component"
@@ -38,7 +37,7 @@ const [pictureArray,setpictureArray]=React.useState([])
 
 useEffect(() => {
           //Diagnosis
-          setItemselect(0)
+          itemselect===-1?setItemselect(0):null
          if(props.route.params.item===null || props.route.params.item===undefined)
             {props.navigation.navigate(AppRoute.SERVICE_ORDER)}
           setItem(props.route.params.item);
@@ -54,13 +53,22 @@ useEffect(() => {
                                             }))
                                             
 
-}, [props.diagnosis_List.length]);
+}, [JSON.stringify(props.diagnosis_List).length]);
 
 useEffect(() => {
   setpictureArray(props.imgList)
 
 },[props.imgList.length])
 
+
+const UploadEdit=(newElem)=>{
+    const newdiagnosis_List= props.diagnosis_List.map(e=>{
+                  return e.idSelect===newElem.idSelect?newElem:e
+                })
+    ToastAndroid.showWithGravity("Saving Description and Explanation",ToastAndroid.SHORT,ToastAndroid.TOP)
+    props.onUpdate_DIAGNOSIS("diagnosis_List",newdiagnosis_List) 
+    storeData("diagnosis_List",JSON.stringify(newdiagnosis_List));           
+}
 
   const AddLabor =()=>{
     var d= new Date;
@@ -85,13 +93,10 @@ useEffect(() => {
 //console.log(newarr)
   props.onUpdate_DIAGNOSIS("diagnosis_List",newarr);
   storeData("diagnosis_List",JSON.stringify(newarr));
+  setItemselect(-1)
   setItemselect(0)
   }
-  const onUpload_Picture=(newElem)=>{
-                                        const newArr=props.imgList.concat(newElem)
-                                        props.onUpdate_DIAGNOSIS("pictures_Diagnosis",newArr);
-                                        storeData("pictures_Diagnosis",JSON.stringify(newArr));
-                                      }
+
   const onDelete_Picture=(newElem)=>{
                                         const newArr=props.imgList.filter(e=>e.PictureID!==newElem.PictureID)
                                         props.onUpdate_DIAGNOSIS("pictures_Diagnosis",newArr);
@@ -154,7 +159,7 @@ useEffect(() => {
                     <Layout style={[styles.layout,{marginLeft:10}]} level='2'>
                           
                           <ListOfResources  navigation={props.navigation}
-                                           
+                                            UploadEdit={UploadEdit}
                                             onDelete={onDelete}
                                             onDelete_Picture={onDelete_Picture}
                                             onUpdate_DIAGNOSIS={props.onUpdate_DIAGNOSIS}
@@ -165,7 +170,7 @@ useEffect(() => {
                                             enablelist={enablelist} 
                                             itemselect={itemselect}
                                             FeaturesList={props.FeaturesList} 
-                                           
+                                            
                                             Clock_List={props.Clock_List}
                                             pictureArray={pictureArray.filter(e=>e.idSelect===enablelist[itemselect].idSelect)}/>
                     </Layout>

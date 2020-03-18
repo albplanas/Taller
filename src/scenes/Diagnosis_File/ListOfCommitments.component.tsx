@@ -14,12 +14,14 @@ import {
   List,
   ListItem,
   Layout,
+  Spinner,
 } from '@ui-kitten/components';
 import { StyleSheet ,ToastAndroid } from 'react-native'; 
 
 import {Add_User_Icon,FileSignature_Icon,DoneAllIcon} from "../../assets/icons"
 import {AppRoute} from "../../navigation/app-routes"
 
+import {default as color } from "../../styles/color.json"
 
 
 
@@ -46,7 +48,9 @@ export const ListOfCommitments = (props) => {
   const renderItemIcon = (style) => (
     <Icon {...style} name='person'/>
   );
-
+  const renderItemIconDB = (style) => (
+    <Icon {...style} name='layers-outline' fill={color.orange}/>
+  );
 
 
   const renderItem = ({ item, index }) => {
@@ -55,7 +59,7 @@ export const ListOfCommitments = (props) => {
     const onSign=()=>props.navigation.navigate(AppRoute.SIGNATURE,{name:"Approve Labor's hours",callback:()=>console.log("callback")})
     const renderItemAccessory = (style) => (
       <Layout>
-             { props.type==="editOrder"? <Button appearance="ghost" onPress={onSign} icon={item.signed===true?DoneAllIcon:FileSignature_Icon}/>:null}
+             { props.type==="edit"? <Button appearance="ghost" onPress={onSign} status="warning" icon={item.signed===true?DoneAllIcon:FileSignature_Icon}/>:null}
      </Layout>
     );
   
@@ -67,13 +71,13 @@ export const ListOfCommitments = (props) => {
           description={item.date}
           style={[props.itemselect===index?styles.select:null,{marginTop:2}]}
           accessory={renderItemAccessory}
-          icon={renderItemIcon}
+          icon={item.orderclosed!==undefined?renderItemIconDB:renderItemIcon}
           onPress={onPress}
         />
       );
   }
   
-
+const Spi = ()=><Layout style={{marginRight:20}}><Spinner /></Layout>
   return (
     <>
     <CardHeader
@@ -81,6 +85,7 @@ export const ListOfCommitments = (props) => {
                 titleStyle={{fontSize:16}}
                 description='By Mechanics'
                 icon={AddLabor_Button}
+                accessory={props.spin===true?Spi:null}
               />
     <List
         style={{minWidth:500}}

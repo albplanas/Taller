@@ -37,7 +37,7 @@ export const PickerSetting =(props)=>{
                                     style={styles.select}
                                     data={data}
                                     status='warning'
-                                    placeholder='Select who are using this device'
+                                    placeholder='Select who is using this device'
                                     selectedOption={userName}
                                     onSelect={(val)=>{setUserName(val)
                                                       funct(val,props.onUpdate_Settings)}}

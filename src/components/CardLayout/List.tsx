@@ -2,16 +2,27 @@ import React from 'react';
 import { StyleSheet,ScrollView, Alert,Image } from 'react-native';
 import {
   ListItem,
+  Icon,
   List,
   Avatar, Button
 } from '@ui-kitten/components';
 import {Img_Src} from "../../assets/iconArrays.js"
 import {AppRoute} from "../../navigation/app-routes"
+import {default as color} from "../../styles/color.json"
+import {Sign_Diag_SO,Read} from "../../SQL/SendSOData/Diagnosis_Service_Order"
 
 
 
 
-
+const Icon_Done = () => (
+  <Icon name='done-all-outline' width={32} height={32} fill={color.green}/>
+);
+const Icon_Available = (props) => (
+  <Icon onPress={props.onPress} name='file-text-outline' width={32} height={32} fill={color.indigo}/>
+);
+const Icon_Info = (props) => (
+  <Icon onPress={props.onPress} name='folder-add-outline' width={32} height={32} fill={color.yellow}/>
+);
 
  export  const ListChanges = (props) => {
 
@@ -30,13 +41,14 @@ import {AppRoute} from "../../navigation/app-routes"
                                                                                                                                   type:props.type
                                                                                                                             }):null}
                                             const GoSignature=()=>{ 
-                                                                  // console.log("props.navigation",props.navigation) 
+                                                                 // console.log(item) 
                                                                   props.navigation!==undefined?
                                                                   props.navigation.navigate(AppRoute.SIGNATURE,
-                                                                                            {
-                                                                                                  item:item,
-                                                                                                  DiagnosisArrayOriginal:[1],
-                                                                                                  idmechanic:props.idmechanic,
+                                                                                            {       
+                                                                                                  name: item.SubTitle+ "  IS DONE 😎",
+                                                                                                  callback:()=>{
+                                                                                                                  Sign_Diag_SO(item.idDiagnosis,1,props.Refresh)
+                                                                                                                }
                                                                                             }):null}                                                                                                         
                                              const   onSign=()=>Alert.alert(
                                                                                 item.SubTitle+"  Close Diagnosis",
@@ -63,24 +75,28 @@ import {AppRoute} from "../../navigation/app-routes"
                                                                                 {cancelable: false},
                                                                               )                                  
                                             const src=Img_Src[item.categoryId-1];
-                                            const buttonSign=()=><Button appearance="outline" onPress={onSign} icon={props.iconSet()[1]} />
+                                           
 
                                             const icon=()=><Avatar style={styles.avatar}  source={src.src}/>   
-                                                                        
+                                              
                                             return <ListItem
                                                                                   title={item.Title}
-                                                                                  titleStyle={{fontSize:20,marginBottom:5}}
+                                                                                  titleStyle={{fontSize:20,marginBottom:5,color:item.orderclosed!==undefined?"#f0ad4e":"white"}}
                                                                                   status="primary"
                                                                                   description={item.SubTitle}
-                                                                                  descriptionStyle={{fontSize:16}}
+                                                                                  descriptionStyle={{fontSize:16,color:item.orderclosed!==undefined?"#665B33":"#868e96"}}
                                                                                   onPress={onPress}
                                                                                   accessory={
-                                                                                                props.type==="diagnosis"?null
-                                                                                                                      :item.signed===true?
-                                                                                                                                            props.iconSet()[2]:buttonSign
+                                                                                                props.type==="diagnosis" || item.orderclosed===undefined?
+                                                                                                                      Icon_Info:
+                                                                                                                      item.orderclosed===true?
+                                                                                                                      Icon_Done:
+                                                                                                                      ()=><Icon_Available onPress={onSign}
+                                                                                                                      />
                                                                                                                                           }
                                                                                   icon={icon}
                                                                                   key={"review_diag_"+item.SubTitle+index}
+                                                                                  style={{marginLeft:0,paddingHorizontal:0}}
                                                                                 />
                                                 
                                                   };
@@ -92,7 +108,7 @@ import {AppRoute} from "../../navigation/app-routes"
         return     <List
                           data={props.data}
                           renderItem={renderItem}
-                         style={{maxHeight:340}}
+                         style={{maxHeight:340,paddingHorizontal:0}}
                         />
   };
 

@@ -17,6 +17,7 @@ import {ViewPagerInlineStylingShowcase} from "./Viewpager"
 export const PiecesByTruck =(props)=>{
 
   const [spinner,setSpinner]=useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [id,setId]=useState(null);
   const [data,setData]=useState([]);
   const [code,setCode]=useState("");
@@ -30,11 +31,19 @@ export const PiecesByTruck =(props)=>{
 
 
         return <>
-                <TopNavigationAlignmentsShowcase  {...props}/>
+                <TopNavigationAlignmentsShowcase  {...props}
+                                                  selectedIndex={selectedIndex}
+                                                  setSelectedIndex={setSelectedIndex}/>
                 <Divider/>
                 <Layout  style={styles.container}>
-                    {spinner?<Loader/>:
-                        <ViewPagerInlineStylingShowcase data={data}/>}
+                    {
+                        spinner?
+                        <Loader/>:
+                        <ViewPagerInlineStylingShowcase 
+                                                        data={data}
+                                                        selectedIndex={selectedIndex}
+                                                        setSelectedIndex={setSelectedIndex}/>
+                    }
                 </Layout>
             </>
     
@@ -44,7 +53,7 @@ return (
   <Layout level="3" style={styles.layoutList}>
     <Spinner status='warning'size='giant'/>
 
-    <Text category="h4">Loading Data ... </Text>
+    <Text category="h4"style={{marginTop:20}}>Loading Data ... </Text>
   </Layout>
 )
 

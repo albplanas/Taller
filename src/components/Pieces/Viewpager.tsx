@@ -6,26 +6,28 @@ import {
   ViewPager,
 } from '@ui-kitten/components';
 import {ListUsed} from "./ListUsed";
+import {PiecesTree} from "../Tree/Structure.component"
+
 
 export const ViewPagerInlineStylingShowcase = (props) => {
 
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const shouldLoadComponent = (index) => index === selectedIndex;
+  
+  const shouldLoadComponent = (index) => index === props.selectedIndex;
   return (
     <ViewPager
-      selectedIndex={selectedIndex}
-      onSelect={(val)=> {setSelectedIndex(val)}}
+      selectedIndex={props.selectedIndex}
+      onSelect={(val)=> {props.setSelectedIndex(val)}}
       shouldLoadComponent={shouldLoadComponent}
       >
       <Layout
         level='2'
         style={styles.tab}>
-        <ListUsed {...props} setSelectedIndex={setSelectedIndex}/>
+        <ListUsed {...props} />
       </Layout>
       <Layout
         level='2'
         style={styles.tab}>
-        <Text category='h3'>Pieces Tree</Text>
+        <PiecesTree/>
       </Layout>
     </ViewPager>
   );

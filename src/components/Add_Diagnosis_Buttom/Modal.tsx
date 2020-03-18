@@ -11,12 +11,12 @@ import { StyleSheet  } from 'react-native';
 
 
 
-  import whyDidYouRender from "@welldone-software/why-did-you-render";
+ // import whyDidYouRender from "@welldone-software/why-did-you-render";
 
-  whyDidYouRender(React);
+  //whyDidYouRender(React);
 
   export class AddDiagnosisModal extends React.PureComponent {
-    static whyDidYouRender = true
+  //  static whyDidYouRender = true
     render(){
       return (
         <AddDiagnosisModalSample {...this.props}/>

@@ -6,15 +6,17 @@ import {
   List,
   ListItem,
   Divider,
-  CheckBox
+  CheckBox,
+  Layout
 } from '@ui-kitten/components';
 import {AppRoute} from "../../navigation/app-routes"
-import {FileSignature_Icon} from "../../assets/icons";
-import { StyleSheet,Alert } from 'react-native';
+import {FileSignature_Icon,EditIcon} from "../../assets/icons";
+import { StyleSheet,Alert} from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
 
 import { batch } from 'react-redux';
 import {OpenClockInClock,CloseClockInClock} from "../../globalFunc_Use/clock"
+import {Alert_Decicion} from "../../globalFunc_Use/messenger"
 
 
 
@@ -32,9 +34,11 @@ export const ListingCase = (props) => {
     const [checked, setChecked] = React.useState(props.Clock_Arr.map(e=>false));
     
     const onCheckBoxCheckedChange = (index) =>  {
+
        var newArr=[...checked] ;
-       newArr[index]=!checked[index]
-       setChecked(newArr)
+       newArr[index]=!checked[index];
+       setChecked(newArr);
+
     }
 
     const isStillOpenCheckBox=()=>{
@@ -63,7 +67,15 @@ export const ListingCase = (props) => {
     }
 
 
-    const  onPressSignature  = () =>props.navigation.navigate(AppRoute.SIGNATURE);
+    const  onPressSignature  = () =>      checked.filter(x=>x===true).length  === 0 ?
+
+                                          Alert_Decicion("No Register Selected","You must select at lease one register",()=>null,()=>null)
+
+                                          : props.navigation.navigate(
+                                                                      AppRoute.SIGNATURE,
+                                                                      { name:"Signature Agreement",
+                                                                        callback:()=>{Alert_Decicion("Signature accepted","",()=>null,()=>null)}
+                                                                      });
 
 
   const renderSign = (style) => (
@@ -75,13 +87,24 @@ export const ListingCase = (props) => {
                 var isStillOpen=item.clockRecords.filter(e=>e.clock_out===null).length>0;
 
                 const  onPressDetails    = ()=>{
-
-                    isStillOpen? CloseClockInClock(props.Clock_List,(arr)=>props.UPDATE_Clock_LIST("Clock_List",arr))
-                                :  OpenClockInClock(props.Clock_List,item,(arr,ind)=>StateManager(arr,ind,props.UPDATE_Clock_LIST))
+                  props.navigation.navigate(AppRoute.SIGNATURE,
+                                                                {
+                                                                  name:isStillOpen?"Clock Out":"Clock In",
+                                                                  callback:()=>{Alert_Decicion("Signature accepted","",()=>null,()=>
+                                                                                                                                                        isStillOpen? CloseClockInClock(props.Clock_List,(arr)=>props.UPDATE_Clock_LIST("Clock_List",arr))
+                                                                                                                                                        :  OpenClockInClock(props.Clock_List,item,(arr,ind)=>StateManager(arr,ind,props.UPDATE_Clock_LIST)))}});
+                    
+                }
+                const  onPressEdit    = ()=>{
+                  props.navigation.navigate(AppRoute.EDIT_CLOCK,{item:item})
+                    
                 }
 
                 const renderDetails = (style) => (
+                  <Layout style={{flex:1,maxWidth:250,flexDirection:"row",justifyContent:"center"}}>
+                    <Button status={"success"} onPress={onPressEdit} style={{marginRight:10}} icon={EditIcon}>EDIT</Button>
                     <Button status={isStillOpen?"danger":"warning"} onPress={onPressDetails}>{isStillOpen?"Clock Out":"Clock In"}</Button>
+                    </Layout>
                 );
                
                

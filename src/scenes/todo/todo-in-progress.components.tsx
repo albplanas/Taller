@@ -17,6 +17,7 @@ import { StopWatch_IconMenu } from '../../assets/icons';
 
 
 
+
 const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & ThemedComponentProps): ListElement => {
 
  // const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -28,30 +29,33 @@ const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & Themed
 
  
   useEffect(() => {
-   //console.log(props.FeaturesTruck.length)
     setData(props.FeaturesTruck ) 
-    setalredyOpend(props.Opened_S_O.map(e=>e.cod) )                  
-  }, []);
+    setalredyOpend(props.Opened_S_O.map(e=>e.cod) )                 
+  }, [props.Opened_S_O.length]);
+  
+  useEffect(() => {
+               
+   }, [props.route.params]);
 
+   
         const selectTruck =(item)=>{
 
                 storeData('truckid_Diagnosis',item.IDCatEquip+"");
 
                 props.onUpdate_DIAGNOSIS('truckid_Diagnosis',item.IDCatEquip+"")
 
-                props.navigation!==undefined?props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item}):null
+                props.navigation!==undefined?props.navigation.navigate(AppRoute.NEW_SERVICE_ORDER,{item:item,callback:()=>onRefresh}):null
 
         }
 
         const onPress_New_SO=(item)=>selectTruck(item)
-        const onPress_Profile =(item) => props.navigation!==undefined?props.navigation.navigate(AppRoute.PROFILE,{cod:item.cod}):null
-        const onPress_Edit_SO = (item)=> props.navigation!==undefined? props.navigation.navigate(AppRoute.EDIT_SERVICE_ORDER,{item:props.Opened_S_O.filter(e=>e.cod===item.cod)[0]}):null
+        const onPress_Edit_SO = (item)=> props.navigation!==undefined? props.navigation.navigate(AppRoute.EDIT_SERVICE_ORDER,{callback:()=>onRefresh,item:props.Opened_S_O.filter(e=>e.cod===item.cod)[0]}):null
         const ShowArrFunc=(item)=>{
 
            return  [alreadyOpend.filter(e=>e===item.cod).length>0,alreadyOpend.filter(e=>e===item.cod).length===0,true];
 
         }
-     console.log("OK")
+
   return (  <Layout style={props.themedStyle.container}>
                                       <Toolbar
                                                                       title={'Welcome '+props.userName+'  😀😀😀!!!'}
@@ -77,17 +81,10 @@ const TodoInProgressScreenComponent = (props: TodoInProgressScreenProps & Themed
                                                     
                                                                                                                           },{
 
-                                                                                                                            title:"",
+                                                                                                                            title:"New Service Order",
                                                                                                                             icon:EditIcon,
                                                                                                                             onPress:onPress_New_SO ,
                                                                                                                             status:"success"
-
-                                                                                                                          },{
-
-                                                                                                                            title:"",
-                                                                                                                            icon:CarIcon,
-                                                                                                                            onPress:onPress_Profile ,
-                                                                                                                            status:"info"
 
                                                                                                                           }]}
                                                                                             />

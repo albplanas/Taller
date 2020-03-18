@@ -103,6 +103,7 @@ export const ReviewChanges =(props)=>{
                                             props.navigation.navigate(AppRoute.PROFILE,
                                                                       {
                                                                             item:props.route.params.item,
+                                                                            cod:props.route.params.item.cod
                                                                       
                                                                       }):null}
 

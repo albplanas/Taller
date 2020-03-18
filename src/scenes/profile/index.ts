@@ -8,9 +8,7 @@ const mapStateToProps = state => {
     return {
        theme:state.settings.theme,
        language:state.settings.language,
-       userName:state.settings.userName,
        FeaturesTruck:state.list.FeaturesTruck,
-       imgList:state.diagnosisList.pictures_Diagnosis,
     };
   };
   const mapDispatchToProps = dispatch => {

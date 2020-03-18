@@ -1,5 +1,6 @@
 import { ToastAndroid ,Alert } from 'react-native';
 
+
 function SelectSMS(data){
     if(data.mtto_mill+""==='null' || parseFloat(data.mtto_mill)<1){
       return {
@@ -38,24 +39,50 @@ function SelectSMS(data){
                           );
 const Alert_Decicion=(title,body,cancelF,acceptF)=>{
 
-  Alert.alert(
-    title,
-    body,
-    [
-      {
-        text: 'Cancel',
-        onPress:cancelF,
-        style: 'cancel',
-      },
-      {text: 'OK', onPress:acceptF },
-    ],
-    {cancelable: false},
-  );
+                    Alert.alert(
+                      title,
+                      body,
+                      [
+                        {
+                          text: 'Cancel',
+                          onPress:()=>cancelF(),
+                          style: 'cancel',
+                        },
+                        {text: 'OK', onPress:()=>acceptF() },
+                      ],
+                      {cancelable: false},
+                    );
 }
-                          
+   
+
+const Validation =(arr,callback)=>{
+  
+  var valid=true;
+
+      for( index=0 ; index<arr.length ; index ++){
+            if(arr[index].validation===false){
+
+              Alert.alert("Something was wrong ...",arr[index].sms,[
+                                                              {text: 'OK', onPress:arr[index].action },
+                                                            ],
+                                                            {cancelable: false},)
+            valid=false;
+            
+            }
+
+        if(index===arr.length-1 && valid!==false){
+              //console.log("callback")
+            callback();
+  
+        }
+      }
+      
+
+}
 
   export {
     SelectSMS,
     Toast_SMS,
-    Alert_Decicion
+    Alert_Decicion,
+    Validation
   }

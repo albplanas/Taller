@@ -18,6 +18,7 @@ import { connect,batch } from 'react-redux';
 import {getMultiple} from "./store/localStorage.js"
 import * as actionTypes from "./store/actions";
 
+
 //import { default as customMapping } from '../custom-mapping.json'; // <-- import custom mapping
 
 
@@ -37,7 +38,8 @@ class AppWindow extends PureComponent{
       }
     getMultiple(['userName','theme','language','truckid_Diagnosis',"notes",
                   'MechanicList','FeaturesList',"diagnosis_List",'FeaturesTruck',"pictures_Diagnosis","ExtraInfo_Diagnosis","Opened_S_O",
-                  'SO_Diagnosis_OffLine','SO_MechanicLabor_OffLine','SO_Picture_OffLine', "SO_ExtraInfo_OffLine"
+                  'SO_ExtraInfo_Diagnosis','SO_diagnosis_List','SO_pictures_Diagnosis',
+                  'Clock_List',"current_ClockIn"
   
   ],(val)=>{
       batch(() => {
@@ -57,10 +59,14 @@ class AppWindow extends PureComponent{
                       this.props.onUpdate_LIST("Opened_S_O",properValue(val,11))
 
                       //Third Group
-                                this.props.onUPDATE_EDIT_SO("SO_Diagnosis_OffLine",properValue(val,12))
-                                this.props.onUPDATE_EDIT_SO("SO_MechanicLabor_OffLine",properValue(val,13))
-                                this.props.onUPDATE_EDIT_SO("SO_Picture_OffLine",properValue(val,14))
-                                this.props.onUPDATE_EDIT_SO("SO_ExtraInfo_OffLine",properValue(val,15))
+                                this.props.onUPDATE_EDIT_SO("ExtraInfo_Diagnosis",properValue(val,12))
+                                this.props.onUPDATE_EDIT_SO("diagnosis_List",properValue(val,13))
+                                this.props.onUPDATE_EDIT_SO("pictures_Diagnosis",properValue(val,14))
+
+                      // Clock
+                                this.props.UPDATE_Clock("Clock_List",properValue(val,15))
+                                this.props.UPDATE_Clock("current_ClockIn",val[16][1])
+                              // console.log(val[15][1],val[16][1])
                       });
    
     })
@@ -102,7 +108,9 @@ const mapDispatchToProps = dispatch => {
       onUpdate_Settings : (property,value) => dispatch({type: actionTypes.UPDATE_SETTINGS ,property:property,value:value}),
       onUpdate_LIST : (property,value) => dispatch({type: actionTypes.UPDATE_LIST ,property:property,value:value}),
       onUpdate_DIAGNOSIS:(property,value) => dispatch({type: actionTypes.UPDATE_DIAGNOSIS_LIST  ,property:property,value:value}),
-      onUPDATE_EDIT_SO :(property,value) => dispatch({type: actionTypes.UPDATE_EDIT_SO  ,property:property,value:value}),
+      //onUPDATE_EDIT_SO :(property,value) => dispatch({type: actionTypes.UPDATE_EDIT_SO  ,property:property,value:value}),
+      onUPDATE_EDIT_SO:(property,value) => dispatch({type: actionTypes.UPDATE_SERVICE_ORDER  ,property:property,value:value}),
+      UPDATE_Clock : (property,value) => dispatch({type: actionTypes.STARTUP_Clock_LIST,property:property,value:value}),
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(AppWindow)  ;
@@ -112,10 +120,3 @@ YellowBox.ignoreWarnings([
   'RCTRootView cancelTouches',
 ]);
 
-
-/***
- * 
- *    <NavigationContainer>
-            <AppNavigator initialRouteName={AppRoute.HOME}/>
-          </NavigationContainer>
- */

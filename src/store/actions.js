@@ -10,3 +10,4 @@ export const UPDATE_CLEAR_DIAGNOSIS_LIST   ="UPDATE_CLEAR_DIAGNOSIS_LIST";
 
 
 export const UPDATE_Clock_LIST            ="UPDATE_Clock_LIST";
+export const STARTUP_Clock_LIST           ="STARTUP_Clock_LIST"

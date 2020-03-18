@@ -2,7 +2,10 @@ import * as actionTypes from '../actions';
 
 const initialState = {
    
-    SO_diagnosis_List:[],
+    diagnosis_List:[],
+    truckid_Diagnosis:null,
+    pictures_Diagnosis:[],
+    ExtraInfo_Diagnosis:[]
        
 }
 const reducer = (state = initialState, action) => {

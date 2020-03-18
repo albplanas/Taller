@@ -23,8 +23,8 @@ import {ListChanges} from "./List";
  *  */
 
 export const CardLayout=(props)=>{
-    return  <Layout style={[styles.layout,{padding:5,minHeight:450,maxHeight:500}]} level='2'>
-                <Card style={[styles.card,{width:props.width}]} header={()=><HeaderCard actionHeaderLeft={props.actionHeaderLeft}icon={props.iconHead} description={props.description} title={props.title}/>} status='success'>
+    return  <Layout style={[styles.layout,{padding:5,paddingRight:0,minHeight:450,maxHeight:500}]} level='2'>
+                <Card style={[styles.card,{width:410,paddingHorizontal:0}]} header={()=><HeaderCard actionHeaderLeft={props.actionHeaderLeft}icon={props.iconHead} description={props.description} title={props.title}/>} status='success'>
                     <Layout style={styles.rowContainer}>
                         <ListChanges {... props}/>
                     </Layout>
@@ -65,5 +65,6 @@ const styles = StyleSheet.create({
 
   rowContainer: {
     flexDirection: 'row',
+    paddingHorizontal:0
   },
 });
